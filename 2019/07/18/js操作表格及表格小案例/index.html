@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1.回顾表格1.HTML表格     a &amp;lt;table border=&amp;quot;1px&amp;quot;&amp;gt; 整个表格,表格加边框，这里是每个单元格td加边框。     b &amp;lt;tr&amp;gt; 表格中的行      c &amp;lt;td&amp;gt; 单元格     d table&amp;gt;tr*3&amp;gt;td*3 : 3行3列表格2.js操作表格1.大致套路1.获取表格对象 2.由于需要动态的操作这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js操作表格及表格小案例">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/18/js操作表格及表格小案例/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="1.回顾表格1.HTML表格     a &amp;lt;table border=&amp;quot;1px&amp;quot;&amp;gt; 整个表格,表格加边框，这里是每个单元格td加边框。     b &amp;lt;tr&amp;gt; 表格中的行      c &amp;lt;td&amp;gt; 单元格     d table&amp;gt;tr*3&amp;gt;td*3 : 3行3列表格2.js操作表格1.大致套路1.获取表格对象 2.由于需要动态的操作这">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-18T13:42:46.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js操作表格及表格小案例">
+<meta name="twitter:description" content="1.回顾表格1.HTML表格     a &amp;lt;table border=&amp;quot;1px&amp;quot;&amp;gt; 整个表格,表格加边框，这里是每个单元格td加边框。     b &amp;lt;tr&amp;gt; 表格中的行      c &amp;lt;td&amp;gt; 单元格     d table&amp;gt;tr*3&amp;gt;td*3 : 3行3列表格2.js操作表格1.大致套路1.获取表格对象 2.由于需要动态的操作这">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/18/js操作表格及表格小案例/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>js操作表格及表格小案例 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="تغییر ناوبری">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>صفحه اصلی</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>برچسب ها</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>دسته بندی ها</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>بایگانی</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/18/js操作表格及表格小案例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js操作表格及表格小案例
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">نوشته شده در</span>
+              
+
+              
+                
+              
+
+              <time title="ایجاد شده: 2019-07-18 19:29:58 / تغییر یافته: 21:42:46" itemprop="dateCreated datePublished" datetime="2019-07-18T19:29:58+08:00">2019-07-18</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-回顾表格"><a href="#1-回顾表格" class="headerlink" title="1.回顾表格"></a>1.回顾表格</h1><pre><code>1.HTML表格
+    a &lt;table border=&quot;1px&quot;&gt; 整个表格,表格加边框，这里是每个单元格td加边框。
+    b &lt;tr&gt; 表格中的行 
+    c &lt;td&gt; 单元格
+    d table&gt;tr*3&gt;td*3 : 3行3列表格</code></pre><h1 id="2-js操作表格"><a href="#2-js操作表格" class="headerlink" title="2.js操作表格"></a>2.js操作表格</h1><h2 id="1-大致套路"><a href="#1-大致套路" class="headerlink" title="1.大致套路"></a>1.大致套路</h2><pre><code>1.获取表格对象
+2.由于需要动态的操作这里使用间接方式获取tr对象。
+例如：在一个单元格td中有一个checkbox按钮，通过var chk = getElementById()获取该按钮对象，
+那么chk.parentNode就是单元格td对象，chk.parentNode.parentNode就是行tr对象。
+3.通过表格对象.deleteRow(行号);表格对象.insertRow(行号);来进行增加，删除表格的行。
+注意：    1.这里的行号从0开始。
+        2.不同于其他 父节点.removechild(子节点对象) 父节点.appendChild(子节点对象);
+4.其他还是通过js操作表格的属性进行相应操作。
+如：ta.rows[i].style.backgroundColor=&quot;red&quot;;动态改变表格颜色。</code></pre><h2 id="2-小知识点"><a href="#2-小知识点" class="headerlink" title="2.小知识点"></a>2.小知识点</h2><pre><code>1.行对象.rowIndex 获得该行的行号;
+2.可以通过getElementByName()获取所有的行对象，对行对象数组遍历，并进行操作。
+3.添加行功能时，表格对象.insertRow(行号) 返回新添加的行对象;只是添加了一个空行，
+需要,行对象.insertCell();进行单元格添加。
+4.表格对象.rows.length 表格总行数</code></pre><h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h2><pre><code>1.删除功能
+问题：1.同时选中两个删除不能全部删除。2.全选删除时首行被删除，解决：循环初始值i设为1，忽略首行。
+原因：每删除一行后，行对象数组长度同时-1。
+例如：删除了行号为1的，同时要删除行号为2的，但是循环执行删除1后，行号2变为了1（可以试一下同时删除行号1和3）那么i此时为2，而行号2此时没有被选择因此不能通过判断。
+解决：每次删除后 判断框内 i--
+担心问题：同时删除行号1和3会不会失败？ 不会，因为1删除后，2不会进入判断，不会进行i--。
+2.修改数量功能
+问题：多次点击后，出现bug。
+原因：多次点击，由于字符串拼接，新的innerHTML被拼接进input标签text的value属性中。
+解决：进行判断，利用isNaN()判断是否为数字，是数字再进行拼接。</code></pre><h1 id="3-具体源码"><a href="#3-具体源码" class="headerlink" title="3.具体源码"></a>3.具体源码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;js操作表格&lt;/title&gt;</span><br><span class="line">		&lt;meta charset=&quot;UTF-8&quot;/&gt;</span><br><span class="line">		&lt;!--</span><br><span class="line">			总结：</span><br><span class="line">			1.获取tr对象 通过删除按钮地父节点.父节点;</span><br><span class="line">			2.表格删除行操作	：表格对象.deleteRow(行号);</span><br><span class="line">			3.行对象.rowIndex 获得该行的行号;</span><br><span class="line">		--&gt;</span><br><span class="line">		&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">			body&#123;</span><br><span class="line">				text-align: center;</span><br><span class="line">			&#125;</span><br><span class="line">			/*表格居中*/</span><br><span class="line">			#ta01&#123;</span><br><span class="line">				margin: auto;</span><br><span class="line">				margin-top: 80px;</span><br><span class="line">			&#125;</span><br><span class="line">			#ta01 tr&#123;</span><br><span class="line">				height: 60px;</span><br><span class="line">				text-align: center;</span><br><span class="line">			&#125;</span><br><span class="line">			#tr01&#123;</span><br><span class="line">				font-size: 24px;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/style&gt;</span><br><span class="line">		&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">			//删除功能</span><br><span class="line">			function deleRow(btn)&#123;</span><br><span class="line">				//获取table对象</span><br><span class="line">				var ta = document.getElementById(&quot;ta01&quot;);</span><br><span class="line">				//获取tr对象</span><br><span class="line">				var tr = btn.parentNode.parentNode;	//获取tr对象 通过删除按钮地父节点.父节点				</span><br><span class="line">				//删除</span><br><span class="line">				ta.deleteRow(tr.rowIndex);			//表格删除行操作 表格对象.deleteRow(行号);</span><br><span class="line">			&#125;</span><br><span class="line">			//修改功能</span><br><span class="line">			function updataRow()&#123;</span><br><span class="line">				//将td内容变为input</span><br><span class="line">				//获取td对象</span><br><span class="line">				var cell = document.getElementById(&quot;cell&quot;);</span><br><span class="line">				//存在bug 点两次修改 字符串拼接  需要判断cell.innerHTML是否为数字</span><br><span class="line">				if(!isNaN(cell.innerHTML))&#123;</span><br><span class="line">					cell.innerHTML=&quot;&lt;input type=&apos;text&apos; value=&apos;&quot;+cell.innerHTML+&quot;&apos; onblur=&apos;updataBlur(this)&apos;/&gt;&quot;;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			//保存修稿功能</span><br><span class="line">			function updataBlur(inp)&#123;</span><br><span class="line">				//获取td对象</span><br><span class="line">				var cell = inp.parentNode;</span><br><span class="line">				cell.innerHTML = inp.value;</span><br><span class="line">			&#125;</span><br><span class="line">			//-------------------------------------------------------</span><br><span class="line">			//使用checkbox删除，功能可多选删除</span><br><span class="line">			function deleMore()&#123;</span><br><span class="line">				//1.获取表格对象</span><br><span class="line">				var ta = document.getElementById(&quot;ta01&quot;);</span><br><span class="line">				//2.获取tr对象，通过 表格对象.deletRow()</span><br><span class="line">				var chks = document.getElementsByName(&quot;chk&quot;);	//获取到了所有的行</span><br><span class="line">					//遍历每一行</span><br><span class="line">					for(var i=1;i&lt;chks.length;i++)&#123;		//从1开始，避免首列被删除</span><br><span class="line">						//删除被选择的对应行号						</span><br><span class="line">						if(chks[i].checked)&#123;</span><br><span class="line">							//注意：这里每删除一行后，chks长度同时-1，例如：删除了行号为1的，同时要删除行号为2的，但是循环执行删除1后，行号2变为了1（可以试一下同时删除行号1和3）</span><br><span class="line">							//那么i此时为2，而行号2此时没有被选择因此不能通过判断。</span><br><span class="line">							//解决：每次删除后 i--</span><br><span class="line">							//担心问题：同时删除行号1和3会不会失败？ 不会因为1删除后，2不会进入判断，不会进行i--。</span><br><span class="line">							ta.deleteRow(i);</span><br><span class="line">							i--;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			//完成添加功能</span><br><span class="line">			function addRow()&#123;</span><br><span class="line">				//表格对象.insertRow() 行号</span><br><span class="line">				//1.获取表格对象</span><br><span class="line">				var ta = document.getElementById(&quot;ta01&quot;);</span><br><span class="line">				//2.添加行 返回添加的行对象</span><br><span class="line">				var row = ta.insertRow(1);	</span><br><span class="line">				//3.添加单元格 返回添加的单元格对象</span><br><span class="line">				//4.添加单元格内容	注意单引号</span><br><span class="line">				var cell00 = row.insertCell();</span><br><span class="line">				cell00.innerHTML=&quot;&lt;input type=&apos;checkbox&apos; name=&apos;chk&apos; id=&apos;chk&apos;/&gt;&quot;;	</span><br><span class="line">				var cell01 = row.insertCell();</span><br><span class="line">				cell01.innerHTML=document.getElementById(&quot;yxname&quot;).value;</span><br><span class="line">				var cell02 = row.insertCell();</span><br><span class="line">				cell02.innerHTML=document.getElementById(&quot;yxprice&quot;).value;</span><br><span class="line">				var cell03 = row.insertCell();</span><br><span class="line">				cell03.innerHTML=document.getElementById(&quot;yxcount&quot;).value;</span><br><span class="line">				var cell04 = row.insertCell();</span><br><span class="line">				cell04.innerHTML=&quot;&lt;input type=&apos;button&apos; value=&apos;修改数量&apos; onclick=&apos;updataRow()&apos;/&gt;&lt;input type=&apos;button&apos; value=&apos;删除&apos; onclick=&apos;deleRow(this)&apos;/&gt;&quot;;</span><br><span class="line">			&#125;</span><br><span class="line">			//复制功能 再最后一行显示复制的</span><br><span class="line">			function copyRow()&#123;</span><br><span class="line">				//添加新的行到最后一行</span><br><span class="line">				var ta = document.getElementById(&quot;ta01&quot;);</span><br><span class="line">				var chks = document.getElementsByName(&quot;chk&quot;);	//获取到了所有的行</span><br><span class="line">					//遍历每一行</span><br><span class="line">					for(var i=1;i&lt;chks.length;i++)&#123;</span><br><span class="line">						if(chks[i].checked)&#123;</span><br><span class="line">							var copy = ta.insertRow(ta.rows.length);	//ta.rows.length表格总行数</span><br><span class="line">							copy.innerHTML = ta.rows[i].innerHTML;	//这里不需要i--，因为总长度只会增不会减少而发生错误。</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			//全选功能</span><br><span class="line">			function chooseAll()&#123;</span><br><span class="line">				//所有的多选框同时选择，或同时取消，更改属性checked为true</span><br><span class="line">				//获取所有的checkbox</span><br><span class="line">				var chks = document.getElementsByName(&quot;chk&quot;);</span><br><span class="line">				//获取全选按钮对象</span><br><span class="line">				var all = document.getElementById(&quot;chkk&quot;);</span><br><span class="line">				if(all.checked)&#123;</span><br><span class="line">					//遍历所有的checkbox</span><br><span class="line">					for(var i=1;i&lt;chks.length;i++)&#123;</span><br><span class="line">						chks[i].checked=true;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					for(var i=1;i&lt;chks.length;i++)&#123;</span><br><span class="line">						chks[i].checked=false;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			//隔行变色功能</span><br><span class="line">			function changeColor()&#123;</span><br><span class="line">				var ta = document.getElementById(&quot;ta01&quot;);</span><br><span class="line">				//获取所有行</span><br><span class="line">				var chks = document.getElementsByName(&quot;chk&quot;);</span><br><span class="line">				//遍历</span><br><span class="line">				for(var i=1;i&lt;chks.length;i++)&#123;</span><br><span class="line">					if(i%2==0)&#123;</span><br><span class="line">						ta.rows[i].style.backgroundColor=&quot;cornflowerblue&quot;;</span><br><span class="line">					&#125;else&#123;</span><br><span class="line">						ta.rows[i].style.backgroundColor=&quot;green&quot;;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;h3&gt;游戏购买清单&lt;/h3&gt;</span><br><span class="line">		&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;删除&quot; onclick=&quot;deleMore()&quot;/&gt;</span><br><span class="line">		&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;添加&quot; onclick=&quot;addRow()&quot;/&gt;</span><br><span class="line">		&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;复制&quot; onclick=&quot;copyRow()&quot;/&gt;</span><br><span class="line">		&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;隔行变色&quot; onclick=&quot;changeColor()&quot;/&gt;</span><br><span class="line">		&lt;hr /&gt;</span><br><span class="line">		&lt;table id=&quot;ta01&quot; border=&quot;1px&quot;&gt;</span><br><span class="line">			&lt;tr id=&quot;tr01&quot;&gt;</span><br><span class="line">				&lt;td width=&quot;50px&quot;&gt;&lt;input type=&quot;checkbox&quot; name=&quot;chk&quot; id=&quot;chkk&quot; value=&quot;0&quot; onclick=&quot;chooseAll()&quot;/&gt;&lt;/td&gt;</span><br><span class="line">				&lt;td width=&quot;200px&quot;&gt;名称&lt;/td&gt;</span><br><span class="line">				&lt;td width=&quot;100px&quot;&gt;价格&lt;/td&gt;</span><br><span class="line">				&lt;td width=&quot;100px&quot;&gt;数量&lt;/td&gt;</span><br><span class="line">				&lt;td width=&quot;200px&quot;&gt;操作&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;&lt;input type=&quot;checkbox&quot; name=&quot;chk&quot; id=&quot;chk&quot; value=&quot;1&quot; /&gt;&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;绝地求生&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;99&lt;/td&gt;</span><br><span class="line">				&lt;td id=&quot;cell&quot;&gt;2&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;修改数量&quot; onclick=&quot;updataRow()&quot;/&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;删除&quot; onclick=&quot;deleRow(this)&quot;/&gt;</span><br><span class="line">				&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;&lt;input type=&quot;checkbox&quot; name=&quot;chk&quot; id=&quot;chk&quot; value=&quot;2&quot; /&gt;&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;守望先锋&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;299&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;1&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;修改数量&quot; onclick=&quot;updataRow()&quot;/&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;删除&quot; onclick=&quot;deleRow(this)&quot;/&gt;</span><br><span class="line">				&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">			&lt;tr&gt;</span><br><span class="line">				&lt;td&gt;&lt;input type=&quot;checkbox&quot; name=&quot;chk&quot; id=&quot;chk&quot; value=&quot;3&quot; /&gt;&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;死神&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;88&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;3&lt;/td&gt;</span><br><span class="line">				&lt;td&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;修改数量&quot; onclick=&quot;updataRow()&quot;/&gt;</span><br><span class="line">					&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;删除&quot; onclick=&quot;deleRow(this)&quot;/&gt;</span><br><span class="line">				&lt;/td&gt;</span><br><span class="line">			&lt;/tr&gt;</span><br><span class="line">		&lt;/table&gt;</span><br><span class="line">		&lt;hr /&gt;</span><br><span class="line">		&lt;b&gt;请输入需要添加的游戏信息：&lt;/b&gt;&lt;br /&gt;</span><br><span class="line">		游戏名：&lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;yxname&quot; value=&quot;&quot; /&gt;</span><br><span class="line">		价格：&lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;yxprice&quot; value=&quot;&quot; /&gt;</span><br><span class="line">		数量：&lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;yxcount&quot; value=&quot;&quot; /&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/18/MarkDown使用学习/" rel="next" title="MarkDown使用学习">
+                <i class="fa fa-chevron-left"></i> MarkDown使用学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            فهرست مطالب
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            نمای کلی
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">پست ها</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-回顾表格"><span class="nav-number">1.</span> <span class="nav-text">1.回顾表格</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-js操作表格"><span class="nav-number">2.</span> <span class="nav-text">2.js操作表格</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-大致套路"><span class="nav-number">2.1.</span> <span class="nav-text">1.大致套路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-小知识点"><span class="nav-number">2.2.</span> <span class="nav-text">2.小知识点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-问题"><span class="nav-number">2.3.</span> <span class="nav-text">3.问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-具体源码"><span class="nav-number">3.</span> <span class="nav-text">3.具体源码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">قدرت گرفته از <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">پوسته – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
