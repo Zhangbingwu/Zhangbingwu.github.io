@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="超链接标签调用js函数 1.&amp;lt;a href =&amp;quot;#&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;这个方法中的#号代表top，所以点击之后会跳转到页面最顶端2.&amp;lt;a href = &amp;quot;javascript:void(0);&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;文本&amp;lt;/a&amp;gt;">
-<meta name="keywords" content="JS,知识">
+  <meta name="description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
+<meta name="keywords" content="jQuery">
 <meta property="og:type" content="article">
-<meta property="og:title" content="超链接标签调用js函数">
-<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/18/超链接标签调用js函数/index.html">
+<meta property="og:title" content="jQuery的封装原理">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/index.html">
 <meta property="og:site_name" content="却又像风">
-<meta property="og:description" content="超链接标签调用js函数 1.&amp;lt;a href =&amp;quot;#&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;这个方法中的#号代表top，所以点击之后会跳转到页面最顶端2.&amp;lt;a href = &amp;quot;javascript:void(0);&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;文本&amp;lt;/a&amp;gt;">
+<meta property="og:description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-18T14:36:05.876Z">
+<meta property="og:updated_time" content="2019-07-18T17:11:54.558Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="超链接标签调用js函数">
-<meta name="twitter:description" content="超链接标签调用js函数 1.&amp;lt;a href =&amp;quot;#&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;这个方法中的#号代表top，所以点击之后会跳转到页面最顶端2.&amp;lt;a href = &amp;quot;javascript:void(0);&amp;quot; onclick =&amp;quot;js_method()&amp;quot;&amp;gt;文本&amp;lt;/a&amp;gt;">
+<meta name="twitter:title" content="jQuery的封装原理">
+<meta name="twitter:description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
 
 
 
@@ -113,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/18/超链接标签调用js函数/">
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/">
 
 
 
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>超链接标签调用js函数 | 却又像风</title>
+  <title>jQuery的封装原理 | 却又像风</title>
   
 
 
@@ -318,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/18/超链接标签调用js函数/">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="却又像风">
@@ -335,7 +335,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">超链接标签调用js函数
+          <h1 class="post-title" itemprop="name headline">jQuery的封装原理
 
               
             
@@ -361,7 +361,7 @@
                 
               
 
-              <time title="Created: 2019-07-18 22:25:45 / Modified: 22:36:05" itemprop="dateCreated datePublished" datetime="2019-07-18T22:25:45+08:00">2019-07-18</time>
+              <time title="Created: 2019-07-19 00:00:00 / Modified: 01:11:54" itemprop="dateCreated datePublished" datetime="2019-07-19T00:00:00+08:00">2019-07-19</time>
             </span>
           
 
@@ -380,7 +380,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/知识/" itemprop="url" rel="index"><span itemprop="name">知识</span></a></span>
 
                 
                 
@@ -418,9 +418,24 @@
       
 
       
-        <h1 id="超链接标签调用js函数"><a href="#超链接标签调用js函数" class="headerlink" title="超链接标签调用js函数"></a>超链接标签调用js函数</h1><blockquote>
-<p>1.<code>&lt;a href =&quot;#&quot; onclick =&quot;js_method()&quot;&gt;</code><br>这个方法中的#号代表top，所以点击之后会跳转到页面最顶端<br>2.<code>&lt;a href = &quot;javascript:void(0);&quot; onclick =&quot;js_method()&quot;&gt;文本&lt;/a&gt;</code><br>这是最常用的方法。前面的void（0）返回undefined，地址不会发生跳转，后面的onClick负责执行js函数。<br>这样写还有一个好处是不会吧js方法暴露在浏览器的状态栏</p>
-</blockquote>
+        <h1 id="jQuery的封装原理"><a href="#jQuery的封装原理" class="headerlink" title="jQuery的封装原理"></a>jQuery的封装原理</h1><h2 id="1-为什么要用”闭包”？"><a href="#1-为什么要用”闭包”？" class="headerlink" title="1.为什么要用”闭包”？"></a>1.为什么要用”闭包”？</h2><ul>
+<li><p>1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。</p>
+</li>
+<li><p>2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">obj.test = function()&#123;</span><br><span class="line">	alert(&quot;外部test&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;测试&quot; onclick=&quot;obj.test()&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.使用工厂模式，将代码进行封装，但是还是可能被覆盖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//工厂模式</span><br><span class="line">function factory()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	var obj = factory();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;测试&quot; onclick=&quot;obj.test()&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.问题根源在于名字，那么去掉名字就好了，但是没有名字的函数应该怎么调用？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>5.使用匿名自调用，但是只能用一次,并且无法获取数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//匿名自调用</span><br><span class="line">(function()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	alert(&quot;匿名自调用&quot;);</span><br><span class="line">	return obj;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>6.使用闭包。</p>
+</li>
+</ul>
 
       
     </div>
@@ -447,9 +462,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/JS/" rel="tag"># JS</a>
-          
-            <a href="/tags/知识/" rel="tag"># 知识</a>
+            <a href="/tags/jQuery/" rel="tag"># jQuery</a>
           
         </div>
       
@@ -462,8 +475,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/18/js操作表格及表格小案例/" rel="next" title="js操作表格及表格小案例">
-                <i class="fa fa-chevron-left"></i> js操作表格及表格小案例
+              <a href="/2019/07/18/超链接标签调用js函数/" rel="next" title="超链接标签调用js函数">
+                <i class="fa fa-chevron-left"></i> 超链接标签调用js函数
               </a>
             
           </div>
@@ -472,8 +485,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/19/jQuery的封装原理/" rel="prev" title="jQuery的封装原理">
-                jQuery的封装原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/19/jQuery的学习/" rel="prev" title="jQuery的学习">
+                jQuery的学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -666,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#超链接标签调用js函数"><span class="nav-number">1.</span> <span class="nav-text">超链接标签调用js函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery的封装原理"><span class="nav-number">1.</span> <span class="nav-text">jQuery的封装原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-为什么要用”闭包”？"><span class="nav-number">1.1.</span> <span class="nav-text">1.为什么要用”闭包”？</span></a></li></ol></li></ol></div>
             
 
           </div>
