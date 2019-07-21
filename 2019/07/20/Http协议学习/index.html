@@ -94,18 +94,20 @@
 
 
 
-  <meta name="description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
-<meta name="keywords" content="jQuery">
+  <meta name="description" content="了解Http什么是Http？ 全称Hyper Text Transfer Protocol（超文本传输协议） 作用1.用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。2.是对服务器和客户端交流的格式规范。3.没有http协议也可以达到交流的目的,但是影响推广。  Http工作原理 HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片">
+<meta name="keywords" content="Http">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jQuery的封装原理">
-<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/index.html">
+<meta property="og:title" content="Http协议学习">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/20/Http协议学习/index.html">
 <meta property="og:site_name" content="却又像风">
-<meta property="og:description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
+<meta property="og:description" content="了解Http什么是Http？ 全称Hyper Text Transfer Protocol（超文本传输协议） 作用1.用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。2.是对服务器和客户端交流的格式规范。3.没有http协议也可以达到交流的目的,但是影响推广。  Http工作原理 HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-18T17:11:54.558Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1856419-168b63033e3a808d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
+<meta property="og:updated_time" content="2019-07-20T07:13:56.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jQuery的封装原理">
-<meta name="twitter:description" content="jQuery的封装原理1.为什么要用”闭包”？ 1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。  2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。 123456var obj = &amp;#123;&amp;#125;;obj.test = function()&amp;#123;	alert(&amp;quot;外部test&amp;quot;);&amp;#125;&amp;lt;input type=">
+<meta name="twitter:title" content="Http协议学习">
+<meta name="twitter:description" content="了解Http什么是Http？ 全称Hyper Text Transfer Protocol（超文本传输协议） 作用1.用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。2.是对服务器和客户端交流的格式规范。3.没有http协议也可以达到交流的目的,但是影响推广。  Http工作原理 HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1856419-168b63033e3a808d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
 
 
 
@@ -113,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/">
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/20/Http协议学习/">
 
 
 
@@ -123,7 +125,7 @@
   };
 </script>
 
-  <title>jQuery的封装原理 | 却又像风</title>
+  <title>Http协议学习 | 却又像风</title>
   
 
 
@@ -318,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/19/jQuery的封装原理/">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/20/Http协议学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="却又像风">
@@ -335,7 +337,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">jQuery的封装原理
+          <h1 class="post-title" itemprop="name headline">Http协议学习
 
               
             
@@ -361,7 +363,7 @@
                 
               
 
-              <time title="Created: 2019-07-19 00:00:00 / Modified: 01:11:54" itemprop="dateCreated datePublished" datetime="2019-07-19T00:00:00+08:00">2019-07-19</time>
+              <time title="Created: 2019-07-20 00:00:00 / Modified: 15:13:56" itemprop="dateCreated datePublished" datetime="2019-07-20T00:00:00+08:00">2019-07-20</time>
             </span>
           
 
@@ -380,7 +382,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/知识/" itemprop="url" rel="index"><span itemprop="name">知识</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
 
                 
                 
@@ -418,23 +420,77 @@
       
 
       
-        <h1 id="jQuery的封装原理"><a href="#jQuery的封装原理" class="headerlink" title="jQuery的封装原理"></a>jQuery的封装原理</h1><h2 id="1-为什么要用”闭包”？"><a href="#1-为什么要用”闭包”？" class="headerlink" title="1.为什么要用”闭包”？"></a>1.为什么要用”闭包”？</h2><ul>
-<li><p>1.内部声明和外部声明重名问题，因为变量被覆盖，导致函数失效。</p>
+        <h1 id="了解Http"><a href="#了解Http" class="headerlink" title="了解Http"></a>了解Http</h1><h2 id="什么是Http？"><a href="#什么是Http？" class="headerlink" title="什么是Http？"></a>什么是Http？</h2><ul>
+<li>全称<br>Hyper Text Transfer Protocol（超文本传输协议）</li>
+<li>作用<br>1.用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。<br>2.是对服务器和客户端交流的格式规范。<br>3.没有http协议也可以达到交流的目的,但是影响推广。</li>
+</ul>
+<h2 id="Http工作原理"><a href="#Http工作原理" class="headerlink" title="Http工作原理"></a>Http工作原理</h2><ul>
+<li>HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。<blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/1856419-168b63033e3a808d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp" alt="TCP/IP通信协议"><br><a href="https://www.jianshu.com/p/9f3e879a4c9c" target="_blank" rel="noopener">https://www.jianshu.com/p/9f3e879a4c9c</a></p>
+</blockquote>
 </li>
-<li><p>2.可以使用对象对函数进行封装，但是对象如果被覆盖，则被封装的所有函数失效。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">obj.test = function()&#123;</span><br><span class="line">	alert(&quot;外部test&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;测试&quot; onclick=&quot;obj.test()&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<li>HTTP默认端口号为80</li>
+<li>HTTP特点<ol>
+<li>简单快速<br>发送请求时，只需要传送请求方法和路径。<br>请求方法常用的有：GET,POST,HEAD。每种方法规定了客户与服务器联系的类型不同。<br>由于HTTP协议简单,使得HTTP服务器的程序规模很小,因而通信速度块。</li>
+<li>媒体独立<br>服务器可以接受客户端发送的任何类型的数据,并用content-type对正文内容类型加以标记。</li>
+<li>无连接<br>无连接的含义是限制每次连接只处理一个请求。<br>客户端请求,服务器处理并相应,收到客户端应答后连接断开。<br>这种方式可以节省传输时间。<br>注意:HTTP 1.1 后支持持续连接。</li>
+<li>无状态<br>服务器每次接受到请求后,处理响应,但是不会记忆请求信息,如果需要第二次请求,即使内容相同也要重新发送请求信息,这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。<br>联想填寄快递单。</li>
+</ol>
 </li>
-<li><p>3.使用工厂模式，将代码进行封装，但是还是可能被覆盖。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//工厂模式</span><br><span class="line">function factory()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	var obj = factory();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=&quot;button&quot; name=&quot;&quot; id=&quot;&quot; value=&quot;测试&quot; onclick=&quot;obj.test()&quot;/&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4.问题根源在于名字，那么去掉名字就好了，但是没有名字的函数应该怎么调用？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>5.使用匿名自调用，但是只能用一次,并且无法获取数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//匿名自调用</span><br><span class="line">(function()&#123;</span><br><span class="line">	var obj = &#123;&#125;;</span><br><span class="line">	obj.test = function()&#123;</span><br><span class="line">		alert(&quot;外部test&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	alert(&quot;匿名自调用&quot;);</span><br><span class="line">	return obj;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>6.使用闭包。</p>
-</li>
+</ul>
+<h1 id="HTTP交互流程"><a href="#HTTP交互流程" class="headerlink" title="HTTP交互流程"></a>HTTP交互流程</h1><ul>
+<li>客户端与服务器建立连接。</li>
+<li>客户端向服务端发送请求。</li>
+<li>服务端接受处理请求,做出响应。</li>
+<li>关闭客户端与服务器的连接。(HTTP1.1之后不会立即关闭)</li>
+</ul>
+<h1 id="HTTP消息结构"><a href="#HTTP消息结构" class="headerlink" title="HTTP消息结构"></a>HTTP消息结构</h1><h2 id="请求消息"><a href="#请求消息" class="headerlink" title="请求消息"></a>请求消息</h2><pre><code>请求头:请求方式 URL 协议版本。
+请求行:消息报头,一般用来说明客户端需要使用的一些附加信息。
+空行:必须要有。
+请求主体</code></pre><h2 id="响应消息"><a href="#响应消息" class="headerlink" title="响应消息"></a>响应消息</h2><pre><code>状态行:协议版本,状态码,状态描述。
+响应头:消息报头,客户端使用的附加信息,时间,conten-type,content-length。
+空行:必须要有
+响应正文</code></pre><h2 id="不同的请求方式-消息结构会有一些差异。"><a href="#不同的请求方式-消息结构会有一些差异。" class="headerlink" title="不同的请求方式,消息结构会有一些差异。"></a>不同的请求方式,消息结构会有一些差异。</h2><ul>
+<li>GET方式<br>没有请求主体,直接以？隔开拼接在请求地址后。</li>
+</ul>
+<h1 id="HTTP请求方式"><a href="#HTTP请求方式" class="headerlink" title="HTTP请求方式"></a>HTTP请求方式</h1><h2 id="GET请求方式"><a href="#GET请求方式" class="headerlink" title="GET请求方式"></a>GET请求方式</h2><ul>
+<li>特点</li>
+</ul>
+<ol>
+<li>get方式只能传输少量数据,不是因为http协议,而是因为地址栏长度有限制。</li>
+<li>没有请求主体,直接以？隔开拼接在请求地址后。</li>
+<li>不安全,因为请求信息暴露。</li>
+<li>效率高。</li>
+</ol>
+<h2 id="POST请求方式"><a href="#POST请求方式" class="headerlink" title="POST请求方式"></a>POST请求方式</h2><ul>
+<li>特点</li>
+</ul>
+<ol>
+<li>POST方式可以传输大量数据。</li>
+<li>请求信息可以都放在请求主体中,也可以拼接在请求地址后,可以合在一起用。</li>
+<li>安全。</li>
+<li>效率相比GET低。</li>
+</ol>
+<h2 id="不同请求方式使用"><a href="#不同请求方式使用" class="headerlink" title="不同请求方式使用"></a>不同请求方式使用</h2><ul>
+<li>第一衡量指标：安全</li>
+<li>然后考虑数据量。</li>
+</ul>
+<h1 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h1><h2 id="状态码分类"><a href="#状态码分类" class="headerlink" title="状态码分类"></a>状态码分类</h2><ul>
+<li>HTTP状态码由三个十进制数字组成，第一个十进制数字定义了状态码的类型，后两个数字没有分类的作用HTTP状态码共分为5种类型：</li>
+<li>1**    信息</li>
+<li>2**    成功</li>
+<li>3**    重定向</li>
+<li>4**    客户端错误</li>
+<li>5**    服务器错误</li>
+</ul>
+<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><ul>
+<li>200 OK                        //客户端请求成功</li>
+<li>400 BadRequest                //客户端请求有语法错误</li>
+<li>401 Unauthorized            //请求未经授权</li>
+<li>403 Forbidden                //服务器拒绝提供服务</li>
+<li>404 Not Found                //请求资源不存在</li>
+<li>500    Internal Server Error    //服务器发生了不可预期的错误</li>
+<li>503 Server Unavailable        //服务器当前不能处理客户端请求,一段时间后会恢复</li>
 </ul>
 
       
@@ -462,7 +518,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/jQuery/" rel="tag"># jQuery</a>
+            <a href="/tags/Http/" rel="tag"># Http</a>
           
         </div>
       
@@ -475,8 +531,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/19/jQuery的学习/" rel="next" title="jQuery的学习">
-                <i class="fa fa-chevron-left"></i> jQuery的学习
+              <a href="/2019/07/19/jQuery的封装原理/" rel="next" title="jQuery的封装原理">
+                <i class="fa fa-chevron-left"></i> jQuery的封装原理
               </a>
             
           </div>
@@ -485,8 +541,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/20/Http协议学习/" rel="prev" title="Http协议学习">
-                Http协议学习 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/20/Servlet入门/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -681,7 +737,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery的封装原理"><span class="nav-number">1.</span> <span class="nav-text">jQuery的封装原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-为什么要用”闭包”？"><span class="nav-number">1.1.</span> <span class="nav-text">1.为什么要用”闭包”？</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#了解Http"><span class="nav-number">1.</span> <span class="nav-text">了解Http</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Http？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Http？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Http工作原理"><span class="nav-number">1.2.</span> <span class="nav-text">Http工作原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP交互流程"><span class="nav-number">2.</span> <span class="nav-text">HTTP交互流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP消息结构"><span class="nav-number">3.</span> <span class="nav-text">HTTP消息结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求消息"><span class="nav-number">3.1.</span> <span class="nav-text">请求消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应消息"><span class="nav-number">3.2.</span> <span class="nav-text">响应消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同的请求方式-消息结构会有一些差异。"><span class="nav-number">3.3.</span> <span class="nav-text">不同的请求方式,消息结构会有一些差异。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP请求方式"><span class="nav-number">4.</span> <span class="nav-text">HTTP请求方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GET请求方式"><span class="nav-number">4.1.</span> <span class="nav-text">GET请求方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST请求方式"><span class="nav-number">4.2.</span> <span class="nav-text">POST请求方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同请求方式使用"><span class="nav-number">4.3.</span> <span class="nav-text">不同请求方式使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态码"><span class="nav-number">5.</span> <span class="nav-text">状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#状态码分类"><span class="nav-number">5.1.</span> <span class="nav-text">状态码分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见状态码"><span class="nav-number">5.2.</span> <span class="nav-text">常见状态码</span></a></li></ol></li></ol></div>
             
 
           </div>
