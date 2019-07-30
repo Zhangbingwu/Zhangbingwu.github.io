@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="MyBatis什么是MyBatis? MyBatis是数据库访问层框架，简化Dao层，提高开发效率。 框架和类库的差别?   类库：类似名言警句，直接拿来用。 框架：类似填空题，是软件开发的半成品。  使用 环境搭建   导入mybatis的jar包,和依赖jar包。  在src下建立mybatis.xml，全局环境配置，作用数据库的连接 12345678910111213141516171819">
+<meta name="keywords" content="MyBatis,数据库连接池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis学习">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/30/MyBatis学习/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="MyBatis什么是MyBatis? MyBatis是数据库访问层框架，简化Dao层，提高开发效率。 框架和类库的差别?   类库：类似名言警句，直接拿来用。 框架：类似填空题，是软件开发的半成品。  使用 环境搭建   导入mybatis的jar包,和依赖jar包。  在src下建立mybatis.xml，全局环境配置，作用数据库的连接 12345678910111213141516171819">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-30T09:59:33.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis学习">
+<meta name="twitter:description" content="MyBatis什么是MyBatis? MyBatis是数据库访问层框架，简化Dao层，提高开发效率。 框架和类库的差别?   类库：类似名言警句，直接拿来用。 框架：类似填空题，是软件开发的半成品。  使用 环境搭建   导入mybatis的jar包,和依赖jar包。  在src下建立mybatis.xml，全局环境配置，作用数据库的连接 12345678910111213141516171819">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/30/MyBatis学习/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MyBatis学习 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/30/MyBatis学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MyBatis学习
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-30 00:00:00 / Modified: 17:59:33" itemprop="dateCreated datePublished" datetime="2019-07-30T00:00:00+08:00">2019-07-30</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><h2 id="什么是MyBatis"><a href="#什么是MyBatis" class="headerlink" title="什么是MyBatis?"></a>什么是MyBatis?</h2><ul>
+<li>MyBatis是数据库访问层框架，简化Dao层，提高开发效率。</li>
+<li>框架和类库的差别?</li>
+</ul>
+<ol>
+<li>类库：类似名言警句，直接拿来用。</li>
+<li>框架：类似填空题，是软件开发的半成品。</li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>环境搭建</li>
+</ul>
+<ol>
+<li><p>导入mybatis的jar包,和依赖jar包。</p>
+</li>
+<li><p>在src下建立mybatis.xml，全局环境配置，作用数据库的连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE configuration</span><br><span class="line">    PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">    &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!--可以有多个环境，default引用当前使用的--&gt;</span><br><span class="line">&lt;environments default=&quot;development&quot;&gt;</span><br><span class="line">&lt;!--声明可以使用的环境--&gt;</span><br><span class="line">    &lt;environment id=&quot;development&quot;&gt;</span><br><span class="line">&lt;!--使用原生JDBC事务--&gt;</span><br><span class="line">        &lt;transactionManager type=&quot;JDBC&quot;/&gt;</span><br><span class="line">&lt;!--数据库连接池--&gt;</span><br><span class="line">        &lt;dataSource type=&quot;POOLED&quot;&gt;</span><br><span class="line">&lt;!-property的那么属性必须按照要求--&gt;</span><br><span class="line">            &lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot;/&gt;</span><br><span class="line">            &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/库名?serverTimezone=GMT&quot;/&gt;</span><br><span class="line">            &lt;property name=&quot;username&quot; value=&quot;数据库用户名&quot;/&gt;</span><br><span class="line">            &lt;property name=&quot;password&quot; value=&quot;数据库密码&quot;/&gt;</span><br><span class="line">        &lt;/dataSource&gt;</span><br><span class="line">    &lt;/environment&gt;</span><br><span class="line">&lt;/environments&gt;</span><br><span class="line">&lt;!-- 使UserMapper.xml配置生成的sql查询方法连接数据库 --&gt;</span><br><span class="line">&lt;mappers&gt;</span><br><span class="line">    &lt;mapper resource=&quot;com/zbw/mapper/UserMapper.xml&quot;/&gt;</span><br><span class="line">&lt;/mappers&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>transactionManager标签的type属性可取值：</p>
+</li>
+<li><p>JDBC，事务管理使用原生的JDBC管理模式。</p>
+</li>
+<li><p>MANAGED，将事务管理转交给其他容器，原生JDBC事务管理的setAutoMapping(false),设置为不自动提交。</p>
+<p>  dataSource标签type属性：</p>
+</li>
+<li><p>POOLED，使用数据库连接池。</p>
+</li>
+<li><p>UNPOOLED，不适用数据库连接池，相当于直接使用JDBC。</p>
+</li>
+<li><p>JNDI：(java naming and directory interface)java命名目录接口技术，可以让java使用其他的如c语言编写的代码。</p>
+</li>
+</ol>
+<ol start="3">
+<li>mybatis建议数据访问层命名mapper包,包下建立UserMapper.xml文件。<br>作用：配置mybatis帮你生成一个a.b.selAll的方法，来执行你指定的sql语句。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;!-- namespace:理解成实现类的全限定路径&quot;包名+类名&quot;--&gt;</span><br><span class="line">&lt;mapper namespace=&quot;a.b&quot;&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">    id:方法名</span><br><span class="line">    paramType:方法的参数类型</span><br><span class="line">    resultType:方法的返回值类型。    如果方法的返回值类型是List，在resultType中写List的泛型，</span><br><span class="line">    因为mybatis对jdbc封装，一行一行读取数据。</span><br><span class="line">--&gt;</span><br><span class="line">    &lt;select id=&quot;selAll&quot; resultType=&quot;com.zbw.pojo.User&quot;&gt;</span><br><span class="line">        select * from users;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="数据库连接池-Tomcat-JDBC-pool"><a href="#数据库连接池-Tomcat-JDBC-pool" class="headerlink" title="数据库连接池 Tomcat JDBC pool"></a>数据库连接池 Tomcat JDBC pool</h1><h2 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h2><p>Active：当前连接对象被应用程序使用中<br>Idle：空闲状态，等待应用程序使用</p>
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><ol>
+<li><p>在META-INF下创建context.xml。<a href="https://blog.csdn.net/TJtulong/article/details/82223535" target="_blank" rel="noopener">IDEA</a></p>
+</li>
+<li><p>context.xml的配置<br>内部参数：<br>  1.JDBC连接</p>
+<pre><code>driverClassName=&quot;&quot;
+url=&quot;&quot;
+username=&quot;&quot;
+password=&quot;&quot;</code></pre><p>  2.数据库连接池的管理</p>
+<pre><code>maxActice=&quot;&quot;    最大正在使用的连接数量
+maxIdle=&quot;&quot;        最大正在空闲的连接池内对象的数量
+name=&quot;&quot;            该连接池的名称
+auth=&quot;Container&quot;    数据库连接池交由应用程序还是服务器管理
+maxWait=&quot;10000&quot;        最大等待时间10s
+type=&quot;javax.sql.DataSource&quot;    在java中通过name属性取到的数据库连接池，在java中的类型是什么</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;Context&gt;</span><br><span class="line">    &lt;Resource</span><br><span class="line">            driverClassName=&quot;com.mysql.cj.jdbc.Driver&quot;</span><br><span class="line">            url=&quot;jdbc:mysql://localhost:3306/sorm?serverTimezone=GMT&quot;</span><br><span class="line">            username=&quot;root&quot;</span><br><span class="line">            password=&quot;root&quot;</span><br><span class="line">            maxActice=&quot;50&quot;</span><br><span class="line">            maxIdle=&quot;20&quot;</span><br><span class="line">            name=&quot;test&quot;</span><br><span class="line">            auth=&quot;Container&quot;</span><br><span class="line">            maxWait=&quot;10000&quot;</span><br><span class="line">            type=&quot;javax.sql.DataSource&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">&lt;/Context&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用JNDI测试数据库连接池<br>首先，既然设置了交由tomcat服务器管理，因此只有将项目发布至tomcat才能使用连接池。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Context context = new InitialContext();	//获取Context.xml对象</span><br><span class="line">DataSource ds = (DataSource) context.lookup(&quot;java:comp/env/test&quot;);</span><br><span class="line">//java:comp/env/固定字符串，完全实体，在context中寻找test连接池，返回DataSource</span><br><span class="line">conn = ds.getConnection();</span><br><span class="line">//通过DataSource工厂获取连接。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>DataSource</li>
+</ul>
+<ol>
+<li><p>该工厂用于提供到此 DataSource 对象所表示的物理数据源的连接。作为 DriverManager 工具的替代项，DataSource 对象是获取连接的首选方法。实现 DataSource 接口的对象通常在基于 JavaTM Naming and Directory Interface (JNDI) API 的命名服务中注册。 </p>
+</li>
+<li><p>DataSource 接口由驱动程序供应商实现。共有三种类型的实现：<br>基本实现 - 生成标准的 Connection 对象<br>连接池实现 - 生成自动参与连接池的 Connection 对象。此实现与中间层连接池管理器一起使用。<br>分布式事务实现 - 生成一个 Connection 对象，该对象可用于分布式事务，大多数情况下总是参与连接池。此实现与中间层事务管理器一起使用，大多数情况下总是与连接池管理器一起使用。 </p>
+</li>
+</ol>
+<h1 id="三种查询方法"><a href="#三种查询方法" class="headerlink" title="三种查询方法"></a>三种查询方法</h1><p>statment为对应Mapper.xml中select的id。</p>
+<h2 id="selectList-String-statment"><a href="#selectList-String-statment" class="headerlink" title="selectList(String statment)"></a>selectList(String statment)</h2><ul>
+<li><p>适用于 查询结果都需要遍历。</p>
+</li>
+<li><p>Mapper.xml中select标签的resultType（查询返回值类型）应该是集合中存储的对象，即集合的泛型，因为查询是一行一行的查，而每一行的数据就是一个对象。</p>
+</li>
+</ul>
+<h2 id="selectOne-String-statment-返回值-Object"><a href="#selectOne-String-statment-返回值-Object" class="headerlink" title="selectOne(String statment)    返回值 Object"></a>selectOne(String statment)    返回值 Object</h2><ul>
+<li><p>适用于 查询的是一行数据，或者一个变量。</p>
+<p>如：<code>select count(*) from table;</code> 变量。</p>
+</li>
+<li><p>Mapper.xml中select标签的resultType（查询返回值类型）应该是内建的类型别名，帮助文档XML映射配置文件中typeAliases。</p>
+</li>
+</ul>
+<h2 id="selectMap-String-statment-String-mapKey-返回值Map-Object-OBject"><a href="#selectMap-String-statment-String-mapKey-返回值Map-Object-OBject" class="headerlink" title="selectMap(String statment,String mapKey)    返回值Map(Object,OBject)"></a>selectMap(String statment,String mapKey)    返回值Map(Object,OBject)</h2><ul>
+<li><p>适用于 需求需要通过某一列的值快速查找这行数据的需求。</p>
+</li>
+<li><p>Mapper.xml中select标签的resultType（查询返回值类型）应该是Map中存储的值的类型。</p>
+</li>
+<li><p>把数据库中某一列的值当作map的key</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+          
+            <a href="/tags/数据库连接池/" rel="tag"># 数据库连接池</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/28/Servlet 3.0 新特性/" rel="next" title="Servlet 3.0 新特性">
+                <i class="fa fa-chevron-left"></i> Servlet 3.0 新特性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/30/TCPIP学习/" rel="prev" title="TCP/IP学习">
+                TCP/IP学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">1.</span> <span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是MyBatis"><span class="nav-number">1.1.</span> <span class="nav-text">什么是MyBatis?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库连接池-Tomcat-JDBC-pool"><span class="nav-number">2.</span> <span class="nav-text">数据库连接池 Tomcat JDBC pool</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#状态"><span class="nav-number">2.1.</span> <span class="nav-text">状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-1"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三种查询方法"><span class="nav-number">3.</span> <span class="nav-text">三种查询方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#selectList-String-statment"><span class="nav-number">3.1.</span> <span class="nav-text">selectList(String statment)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selectOne-String-statment-返回值-Object"><span class="nav-number">3.2.</span> <span class="nav-text">selectOne(String statment)    返回值 Object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selectMap-String-statment-String-mapKey-返回值Map-Object-OBject"><span class="nav-number">3.3.</span> <span class="nav-text">selectMap(String statment,String mapKey)    返回值Map(Object,OBject)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

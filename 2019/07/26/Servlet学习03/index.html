@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Ajax学习什么是Ajax? 局部刷新技术Asynchronous JavaScript and XML（异步的 JavaScript 和 XML），用来在当前页面内响应不同的请求内容。 Ajax并非一种新的技术，而是几种原有技术的结合体，是浏览器端的技术。 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。  Ajax运行原理 参考至 在JS中，通过XMLHttp">
+<meta name="keywords" content="Servlet,Ajax">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet学习03">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/26/Servlet学习03/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="Ajax学习什么是Ajax? 局部刷新技术Asynchronous JavaScript and XML（异步的 JavaScript 和 XML），用来在当前页面内响应不同的请求内容。 Ajax并非一种新的技术，而是几种原有技术的结合体，是浏览器端的技术。 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。  Ajax运行原理 参考至 在JS中，通过XMLHttp">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-27T03:22:03.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet学习03">
+<meta name="twitter:description" content="Ajax学习什么是Ajax? 局部刷新技术Asynchronous JavaScript and XML（异步的 JavaScript 和 XML），用来在当前页面内响应不同的请求内容。 Ajax并非一种新的技术，而是几种原有技术的结合体，是浏览器端的技术。 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。  Ajax运行原理 参考至 在JS中，通过XMLHttp">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/26/Servlet学习03/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Servlet学习03 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/26/Servlet学习03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Servlet学习03
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-26T00:00:00+08:00">2019-07-26</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-27 11:22:03" itemprop="dateModified" datetime="2019-07-27T11:22:03+08:00">2019-07-27</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Ajax学习"><a href="#Ajax学习" class="headerlink" title="Ajax学习"></a>Ajax学习</h1><h2 id="什么是Ajax"><a href="#什么是Ajax" class="headerlink" title="什么是Ajax?"></a>什么是Ajax?</h2><ul>
+<li>局部刷新技术Asynchronous JavaScript and XML（异步的 JavaScript 和 XML），用来在当前页面内响应不同的请求内容。</li>
+<li>Ajax并非一种新的技术，而是几种原有技术的结合体，是浏览器端的技术。</li>
+<li>最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。</li>
+</ul>
+<h2 id="Ajax运行原理"><a href="#Ajax运行原理" class="headerlink" title="Ajax运行原理"></a>Ajax运行原理</h2><ul>
+<li><a href="https://www.cnblogs.com/wanghp/p/6991554.html" target="_blank" rel="noopener">参考至</a></li>
+<li>在JS中，通过XMLHttpRequest对象向服务器异步发送请求，获取响应数据，通过JS操作文档结构，达到更新数据的展示。</li>
+<li>Ajax采用异步请求，虽然同步效率高于异步，但是通过异步请求，不会阻塞用户，可以达到无刷新更新数据的效果。</li>
+</ul>
+<h2 id="Ajax的使用"><a href="#Ajax的使用" class="headerlink" title="Ajax的使用"></a>Ajax的使用</h2><ul>
+<li>1.获取Ajax对象<br>   因为浏览器版本的问题判断。</li>
+<li>2.重写onreadystatechange函数<br>   判断Ajax状态码<pre><code>判断响应状态码
+    获取响应内容
+    处理响应内容(操作文档结构)</code></pre></li>
+<li>3.发送请求</li>
+<li>示例<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建Ajax引擎对象</span><br><span class="line">      var xmlHttp;</span><br><span class="line">      if(window.XMLHttpRequest)&#123;  //火狐等</span><br><span class="line">        xmlHttp = new XMLHttpRequest();</span><br><span class="line">      &#125;else if(window.ActiveXObject)&#123; //IE低版本</span><br><span class="line">        xmlHttp = new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>xmlHttp.onreadystatechange = function () {}    //重写onreadystatechange函数</code></p>
+<ul>
+<li><code>xmlHttp.readyState</code>    Ajax状态码(0,1,2,3,4)<br>0:建立了ajax对象，但是还未初始化<br>1:ajax对象创建    open()调用<br>2:send()调用<br>3:请求成功发送，正在接收数据<br>4:接收数据成功</li>
+<li><code>xmlHttp.status</code>    响应状态码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.open(&quot;get&quot;,&quot;a&quot;,true); //  (&quot;请求方式&quot;,&quot;uri&quot;,&quot;是否开启异步&quot;)</span><br><span class="line">xmlHttp.send(null); //post请求的话，用来发送请求参数。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Ajax的异步和同步"><a href="#Ajax的异步和同步" class="headerlink" title="Ajax的异步和同步"></a>Ajax的异步和同步</h2><pre><code>默认为true：开启异步</code></pre><ul>
+<li>同步：Ajax发送请求后，等待数据接收后，再继续执行接下来的代码。</li>
+<li>异步：Ajax发送请求后，开辟一个线程去等待接收，与此同时继续执行接下来的代码。</li>
+</ul>
+<h2 id="Ajax请求方式"><a href="#Ajax请求方式" class="headerlink" title="Ajax请求方式"></a>Ajax请求方式</h2><ul>
+<li><p>get方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.open(&quot;get&quot;,&quot;a?name=杨二&amp;pwd=321&quot;,true);</span><br><span class="line">xmlHttp.send(null);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>post方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xmlHttp.open(&quot;post&quot;,&quot;a&quot;,true);</span><br><span class="line">xmlHttp.setRequestHeader(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);</span><br><span class="line">xmlHttp.send(&quot;name=张三&amp;pwd=123&quot;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>post方式必须要有，设置参数类型是键值对。<br>xmlHttp.setRequestHeader(“Content-Type”,”application/x-www-form-urlencoded”);</p>
+<h2 id="Ajax响应"><a href="#Ajax响应" class="headerlink" title="Ajax响应"></a>Ajax响应</h2><h3 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h3><ul>
+<li>在处理Ajax请求，响应数据的时候，如果数据是对象，或者装有对象的集合。</li>
+<li>分析</li>
+</ul>
+<ol>
+<li>要将对象完整的传输，可以用js的对象存储已有的对象</li>
+<li>json格式：响应数据：var obj={“name”:”zhangsan”,”pwd”:”123”}  </li>
+<li>在js中使用Global.eval()方法，检查并执行内部代码，Global可以省略，js中便创建了相同内容的对象。</li>
+<li>但是后台不应该规定对象名，所以直接响应： {“name”:”zhangsan”,”pwd”:”123”} 在js中eval(“var obj2=”+ajax对象.responseText);</li>
+<li>为了方便，不用自己拼接字符串，可以使用Gson可以将对象，集合自动转为json格式。<br><code>resp.getWriter().write(new Gson().toJson(h));</code></li>
+<li>List的话 Gson会转为[{},{},{}···] 这样的数组</li>
+</ol>
+<h3 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h3><ol>
+<li>接收ajax请求的servlet必须设置响应编码格式。<br><code>resp.setContentType(&quot;text/xml;charset=utf-8&quot;);</code></li>
+<li>ajax接收时。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var doc = xmlHttp.responseXML;</span><br><span class="line">alert(doc.getElementsByTagName(&quot;name&quot;)[0].innerHTML);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag"># Servlet</a>
+          
+            <a href="/tags/Ajax/" rel="tag"># Ajax</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/Servlet路径问题/" rel="next" title="Servlet路径问题">
+                <i class="fa fa-chevron-left"></i> Servlet路径问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/27/Servlet学习04/" rel="prev" title="Servlet学习04">
+                Servlet学习04 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ajax学习"><span class="nav-number">1.</span> <span class="nav-text">Ajax学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Ajax"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Ajax?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax运行原理"><span class="nav-number">1.2.</span> <span class="nav-text">Ajax运行原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax的使用"><span class="nav-number">1.3.</span> <span class="nav-text">Ajax的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax的异步和同步"><span class="nav-number">1.4.</span> <span class="nav-text">Ajax的异步和同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax请求方式"><span class="nav-number">1.5.</span> <span class="nav-text">Ajax请求方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ajax响应"><span class="nav-number">1.6.</span> <span class="nav-text">Ajax响应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON"><span class="nav-number">1.6.1.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML"><span class="nav-number">1.6.2.</span> <span class="nav-text">XML</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

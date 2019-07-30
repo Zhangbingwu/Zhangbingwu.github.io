@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="服务器什么是服务器？ 可以实时地调用不同的代码的一个容器。  Servlet技术Servlet概念 Server AppletServlet（Server Applet）：全称Java Servlet。是基于Java技术的web组件，由容器管理并产生动态内容。Servlet引擎作为WEB服务器的扩展提供支持Servlet功能。Servlet与客户端通过Servlet容器实现的请求/响应模式进行交互">
+<meta name="keywords" content="Servlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet学习01">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/07/20/Servlet学习01/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="服务器什么是服务器？ 可以实时地调用不同的代码的一个容器。  Servlet技术Servlet概念 Server AppletServlet（Server Applet）：全称Java Servlet。是基于Java技术的web组件，由容器管理并产生动态内容。Servlet引擎作为WEB服务器的扩展提供支持Servlet功能。Servlet与客户端通过Servlet容器实现的请求/响应模式进行交互">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-23T16:32:32.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet学习01">
+<meta name="twitter:description" content="服务器什么是服务器？ 可以实时地调用不同的代码的一个容器。  Servlet技术Servlet概念 Server AppletServlet（Server Applet）：全称Java Servlet。是基于Java技术的web组件，由容器管理并产生动态内容。Servlet引擎作为WEB服务器的扩展提供支持Servlet功能。Servlet与客户端通过Servlet容器实现的请求/响应模式进行交互">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/07/20/Servlet学习01/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Servlet学习01 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/07/20/Servlet学习01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Servlet学习01
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-20T00:00:00+08:00">2019-07-20</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-24 00:32:32" itemprop="dateModified" datetime="2019-07-24T00:32:32+08:00">2019-07-24</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h1><h2 id="什么是服务器？"><a href="#什么是服务器？" class="headerlink" title="什么是服务器？"></a>什么是服务器？</h2><ul>
+<li>可以实时地调用不同的代码的一个容器。</li>
+</ul>
+<h1 id="Servlet技术"><a href="#Servlet技术" class="headerlink" title="Servlet技术"></a>Servlet技术</h1><h2 id="Servlet概念"><a href="#Servlet概念" class="headerlink" title="Servlet概念"></a>Servlet概念</h2><ul>
+<li>Server Applet<br>Servlet（Server Applet）：全称Java Servlet。是基于Java技术的web组件，由容器管理并产生动态内容。Servlet引擎作为WEB服务器的扩展提供支持Servlet功能。Servlet与客户端通过Servlet容器实现的请求/响应模式进行交互。动态web开发技术。</li>
+</ul>
+<h2 id="为什么有Servlet技术？"><a href="#为什么有Servlet技术？" class="headerlink" title="为什么有Servlet技术？"></a>为什么有Servlet技术？</h2><ul>
+<li>服务器接收到浏览器请求后,自动调用对应逻辑代码进行请求处理,但是逻辑代码是有程序员编写并放到服务器中,那么服务器怎么知道该怎么调用？调用哪个类？哪个方法进行请求处理？</li>
+<li>程序员在编写代码的时候能够按照服务器能够识别的规则进行编写,浏览器按照指定的规则进行发送请求,那么服务器就可以调用并执行相应逻辑的代码进行请求处理。</li>
+</ul>
+<h2 id="狭义的Servlet是指Java实现的一个接口"><a href="#狭义的Servlet是指Java实现的一个接口" class="headerlink" title="狭义的Servlet是指Java实现的一个接口"></a>狭义的Servlet是指Java实现的一个接口</h2><ul>
+<li>通过实现这个接口从而规范代码书写。</li>
+</ul>
+<h2 id="广义的Servlet是指任何实现了这个接口的类"><a href="#广义的Servlet是指任何实现了这个接口的类" class="headerlink" title="广义的Servlet是指任何实现了这个接口的类"></a>广义的Servlet是指任何实现了这个接口的类</h2><ul>
+<li>一般人们理解为广义的。</li>
+</ul>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="IDEA配置和使用Tomcat"><a href="#IDEA配置和使用Tomcat" class="headerlink" title="IDEA配置和使用Tomcat"></a>IDEA配置和使用Tomcat</h2><blockquote>
+<p><a href="https://www.cnblogs.com/liusong-funtime/p/9144275.html" target="_blank" rel="noopener">IDEA配置和使用Tomcat</a></p>
+</blockquote>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ul>
+<li>1.类需要继承HttpServlet<br>其父类实现了Servlet接口,保证了规范。</li>
+<li>2.重写方法</li>
+<li>3.方法中书写逻辑代码</li>
+<li>4.在webRoot下的WEB-INF文件夹下的web.xnml文件中配置servlet</li>
+</ul>
+<h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>如<a href="http://localhost:8080/project/test" target="_blank" rel="noopener">http://localhost:8080/project/test</a><br>服务器地址:端口/虚拟项目名/Servlet别名</p>
+<h1 id="Servlet生命周期"><a href="#Servlet生命周期" class="headerlink" title="Servlet生命周期"></a>Servlet生命周期</h1><h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><pre><code>1.启动web服务器解析web.xml
+2.第一次接收到客户端请求,服务器判断Servlet实例是否存在，加载Servlet并创建实例
+3.init()并调用请求相应方法
+4.等待其他请求
+5.服务器关闭,Servlet销毁,destroy()</code></pre><h2 id="1-从第一次接收到请求-到服务器关闭"><a href="#1-从第一次接收到请求-到服务器关闭" class="headerlink" title="1.从第一次接收到请求,到服务器关闭"></a>1.从第一次接收到请求,到服务器关闭</h2><h2 id="2-如果web-xml配置了load-on-startup-生命周期从服务器启动-到服务器关闭。"><a href="#2-如果web-xml配置了load-on-startup-生命周期从服务器启动-到服务器关闭。" class="headerlink" title="2.如果web.xml配置了load-on-startup,生命周期从服务器启动,到服务器关闭。"></a>2.如果web.xml配置了load-on-startup,生命周期从服务器启动,到服务器关闭。</h2><h1 id="service-和doGet-和doPost"><a href="#service-和doGet-和doPost" class="headerlink" title="service()和doGet()和doPost()"></a>service()和doGet()和doPost()</h1><h2 id="service"><a href="#service" class="headerlink" title="service()"></a>service()</h2><pre><code>可以处理get/post方式的请求,如果servlet中有service方法,会优先调用service方法对请求进行处理。</code></pre><h2 id="doGet"><a href="#doGet" class="headerlink" title="doGet()"></a>doGet()</h2><pre><code>处理get方式的请求</code></pre><h2 id="doPost"><a href="#doPost" class="headerlink" title="doPost()"></a>doPost()</h2><pre><code>处理post方式的请求</code></pre><h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><pre><code>*如果在重写的service方法中调用了父类的service方法(super.service(req, resp);),则service方法处理完后,会再次根据请求方式相应的doGet和doPost方法。所以,一般情况下,我们是不在重写的service中调用父类的service方法的,避免出现405错误(请求方式不匹配)*</code></pre><h1 id="Servlet常见错误"><a href="#Servlet常见错误" class="headerlink" title="Servlet常见错误"></a>Servlet常见错误</h1><h2 id="404错误：资源未找到"><a href="#404错误：资源未找到" class="headerlink" title="404错误：资源未找到"></a>404错误：资源未找到</h2><ul>
+<li>请求地址中虚拟项目名以及Servlet别名检查是否与web.xml匹配。</li>
+</ul>
+<h2 id="500错误：内部服务器错误"><a href="#500错误：内部服务器错误" class="headerlink" title="500错误：内部服务器错误"></a>500错误：内部服务器错误</h2><ul>
+<li>ClassNotFoundException:com.xxx.xxx<br>检查web.xml中Servlet类的全限定路径是否错误servlet-class</li>
+<li>service方法体代码逻辑错误。</li>
+</ul>
+<h2 id="405错误：请求方式不支持"><a href="#405错误：请求方式不支持" class="headerlink" title="405错误：请求方式不支持"></a>405错误：请求方式不支持</h2><ul>
+<li>检查get和post请求方式是否有匹配的doGet和doPost</li>
+<li>一般使用service方法且不要调用父类</li>
+</ul>
+<h1 id="Request对象"><a href="#Request对象" class="headerlink" title="Request对象"></a>Request对象</h1><h2 id="什么是Request对象？"><a href="#什么是Request对象？" class="headerlink" title="什么是Request对象？"></a>什么是Request对象？</h2><pre><code>服务器接受到请求后,需要存储请求,并保证请求数据的完整性,因此创建一个对象来保存,在service方法执行时作为实参传递到service方法中。</code></pre><h2 id="获取请求数据"><a href="#获取请求数据" class="headerlink" title="获取请求数据"></a>获取请求数据</h2><ul>
+<li>获取请求头数据</li>
+</ul>
+<ol>
+<li>req.getMethod() //获取请求方式</li>
+<li>req.getRequestURL()    //获取请求URL</li>
+<li>req.getRequestURI()    //获取请求URI    URI就是具体的资源路径</li>
+<li>req.getScheme()    //获取请求协议信息</li>
+</ol>
+<ul>
+<li>获取请求行数据</li>
+</ul>
+<ol>
+<li>req.getHeader(“键名”)    //获取指定的附加信息</li>
+<li>req.getHeaderNames()    //获取所有的附加信息的键名 返回枚举类型<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Enumeration&lt;String&gt; names = req.getHeaderNames();       //返回枚举类型</span><br><span class="line">               //遍历枚举</span><br><span class="line">               while(names.hasMoreElements())&#123;</span><br><span class="line">                   String name = names.nextElement();</span><br><span class="line">                   //根据键名查询值</span><br><span class="line">                   String value = req.getHeader(name);</span><br><span class="line">                   System.out.println(name+value);</span><br><span class="line">               &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>获取请求主体</li>
+</ul>
+<ol>
+<li>req.getParameter(“键名”)    //获取指定的用户数据</li>
+<li>req.getParameterValues(“键名”)    //获取同名不同值的用户数据 返回数组</li>
+<li>req.getParameterNames()    //获取所有的用户数据的键名 返回枚举类型</li>
+</ol>
+<ul>
+<li>注意<br>如果键名匹配出现问题,返回null,因此需要注意空指针问题。</li>
+</ul>
+<h2 id="Request对象作用域"><a href="#Request对象作用域" class="headerlink" title="Request对象作用域"></a>Request对象作用域</h2><ul>
+<li><p>解决了不同的Servlet之间数据共享问题，也就是数据能从一个Servlet流转到另一个Servlet中。</p>
+</li>
+<li><p>使用：<br>req.setAttribute(object name,object value);<br>req.getAttribute(object name);    //根据类型不同强转</p>
+</li>
+<li><p>作用域<br>基于请求转发，一次请求内的所有Servlet有效。</p>
+</li>
+</ul>
+<h2 id="Request对象特点"><a href="#Request对象特点" class="headerlink" title="Request对象特点"></a>Request对象特点</h2><ol>
+<li>服务器创建</li>
+<li>每次请求都会创建（http的无状态）</li>
+<li>生命周期–一次请求（基于请求转发）</li>
+</ol>
+<h1 id="Response对象"><a href="#Response对象" class="headerlink" title="Response对象"></a>Response对象</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><pre><code>对请求做出响应</code></pre><h2 id="设置响应数据"><a href="#设置响应数据" class="headerlink" title="设置响应数据"></a>设置响应数据</h2><ul>
+<li>设置响应头</li>
+</ul>
+<ol>
+<li>resp.setHeader(String name,String name);    //会覆盖掉原来的</li>
+<li>resp.addHeader(String name,String name);    //会继续添加</li>
+</ol>
+<ul>
+<li>设置响应编码格式<br>resp.setHeader(“content-type”,”text/html;charset=utf-8”);<br>resp.setContentType(“text/html;charset=utf-8”);</li>
+<li>设置响应状态<br>resp.sendError(int num,String msg);</li>
+<li>设置响应实体<br>esp.getWriter().write(String content);</li>
+</ul>
+<h1 id="请求中文乱码解决"><a href="#请求中文乱码解决" class="headerlink" title="请求中文乱码解决"></a>请求中文乱码解决</h1><h2 id="1-使用String进行数据重新编码"><a href="#1-使用String进行数据重新编码" class="headerlink" title="1.使用String进行数据重新编码"></a>1.使用String进行数据重新编码</h2><pre><code>uname = new String(uname.getBytes(&quot;iso8859-1&quot;),&quot;utf-8&quot;);</code></pre><h2 id="2-使用公共配置"><a href="#2-使用公共配置" class="headerlink" title="2.使用公共配置"></a>2.使用公共配置</h2><ul>
+<li>get方式</li>
+</ul>
+<ol>
+<li>req.setCharacterEncoding(“utf-8”);</li>
+<li>tomcat的目录下的配置文件conf目录中修改server.xml,在connector标签下添加属性，useBodayEncodingForURI=”true”;</li>
+</ol>
+<ul>
+<li>post方式<br>req.setCharacterEncoding(“utf-8”);</li>
+</ul>
+<h2 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h2><ol>
+<li>useBodyEncodingForURI=”true”是说，请求参数的编码方式要采用请求体的编码方式。</li>
+<li>而filter的request.setCharacterEncoding(‘UTF-8’)或者请求header中的content-type中的编码都是针对请求体的。</li>
+<li>URIEncoding是针对请求参数的编码设置的。</li>
+</ol>
+<h1 id="请求转发"><a href="#请求转发" class="headerlink" title="请求转发"></a>请求转发</h1><ul>
+<li>作用<br>实现多个Servlet联动操作处理请求，这样避免了代码冗余，让Servlet职责更加明确。</li>
+<li>使用<br>req.getRequestDispatcher(“要转发的地址”).forward(req,resp);<br>地址：相对路径，直接书写Servlet别名。</li>
+<li>特点<br>一次请求，浏览器地址信息不会变化。</li>
+<li>注意<br>请求转发后直接return，交由其他Servlet来响应。</li>
+</ul>
+<h1 id="响应重定向"><a href="#响应重定向" class="headerlink" title="响应重定向"></a>响应重定向</h1><ul>
+<li>解决了表单重复提交的问题，以及此Servlet无法处理请求的的问题</li>
+<li>使用：<ol>
+<li>resp.sendRedirect(String uri);如果是网络资源String url</li>
+<li>实例：    <code>resp.sendRedirect(&quot;/login/m&quot;);</code></li>
+</ol>
+</li>
+<li>特点<ol>
+<li>两次请求，两个request</li>
+<li>浏览器地址信息会发生变化，因为请求不同。</li>
+</ol>
+</li>
+<li>使用时机<ol>
+<li>如果请求中由表单数据（由form表单收集的用户信息）且比较重要不能重复提交，建议使用重定向。</li>
+<li>如果这个Servlet无法处理此请求，建议使用重定向定位到可以处理的资源。（如：淘宝购买商品，购买后淘宝定向到支付宝）</li>
+</ol>
+</li>
+</ul>
+<h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><h2 id="Cookie的作用和特点"><a href="#Cookie的作用和特点" class="headerlink" title="Cookie的作用和特点"></a>Cookie的作用和特点</h2><ul>
+<li><p>作用<br>解决发送的不同请求间的数据共享问题。</p>
+</li>
+<li><p>特点</p>
+</li>
+</ul>
+<ol>
+<li>临时存储<br>如果没有设置Cookie有效期，那么这个Cookie对象为临时存储，存储在浏览器的运存中，重新打开浏览器Cookie对象失效。</li>
+<li>定时存储<br>设置Cookie有效期后，这个Cookie对象为定时存储，存储在客户端硬盘中，在有效期内符和路径要求的请求都会附带该信息。</li>
+<li>浏览器端的数据存储技术。</li>
+<li>存储数据的声明在服务器端。</li>
+</ol>
+<ul>
+<li>注意：</li>
+</ul>
+<ol>
+<li>一个Cookie对象只能存储一条数据,以键值对的形式存储。</li>
+</ol>
+<h2 id="Cookie的使用"><a href="#Cookie的使用" class="headerlink" title="Cookie的使用"></a>Cookie的使用</h2><ul>
+<li>Cookie的创建，设置和响应</li>
+</ul>
+<ol>
+<li>创建Cookie对象<br><code>Cookie ck = new Cookie(&quot;uname&quot;,&quot;zhangsan&quot;);</code></li>
+<li>设置Cookie有效期–以s为单位的int<br><code>ck.setMaxAge(2*24*3600);</code></li>
+<li>设置Cookie有效路径–uri<br><code>ck.setPath(&quot;/cookie/abc&quot;);</code><br>只有访问这个路径，请求才会携带cookie信息</li>
+<li>响应Cookie信息到浏览器<br><code>resp.addCookie(ck);</code></li>
+</ol>
+<ul>
+<li>Cookie的获取</li>
+</ul>
+<ol>
+<li><code>Cookie[] cks = req.getCookies();</code><br>返回一个由Cookie对象的数组。</li>
+<li>注意：如果Cookie中没有数据，获取的cks为null，如果遍历获取内容出现空指针问题。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if(cks != null)&#123;</span><br><span class="line">    for(Cookie ck:cks)&#123;</span><br><span class="line">        String name = ck.getName();</span><br><span class="line">        String value = ck.getValue();</span><br><span class="line">        System.out.println(name+&quot;:&quot;+value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="为什么要进行Cookie校验"><a href="#为什么要进行Cookie校验" class="headerlink" title="为什么要进行Cookie校验"></a>为什么要进行Cookie校验</h2><p>例子：用户登录成功，创建Cookie对象，（！注意，Cookie对象的创建，因为Cookie直接在响应头和请求头中，不要涉及密码等隐私，安全问题。）如果不进行校验，用户注销（数据库中删除了用户数据），用户再次登录就会发生问题。</p>
+<h1 id="Session技术"><a href="#Session技术" class="headerlink" title="Session技术"></a>Session技术</h1><h2 id="Session作用及其原理"><a href="#Session作用及其原理" class="headerlink" title="Session作用及其原理"></a>Session作用及其原理</h2><ul>
+<li><p>作用<br>解决了用户发起的不同请求，服务器在对不同请求处理时用户请求信息的共享。</p>
+</li>
+<li><p>原理<br>用户登录成功后，服务器为其创建一个session对象，用于存储用户的信息，方便以后使用。而怎么让用户第二次请求时拿到正确的session对象？服务器创建session对象后，将对应的JSESSIONID（类似于号码牌，对应其session对象）利用Cookie技术存储到浏览器中，那么请求时通过这个ID就能找到对应的session对象，从而使不同请求可以调用session对象来共享数据。</p>
+</li>
+</ul>
+<h2 id="Session的使用"><a href="#Session的使用" class="headerlink" title="Session的使用"></a>Session的使用</h2><h3 id="创建Session-获取Session对象"><a href="#创建Session-获取Session对象" class="headerlink" title="创建Session/获取Session对象"></a>创建Session/获取Session对象</h3><pre><code>`HttpSession hs = req.getSession();`</code></pre><ul>
+<li>注意：<br>创建还是获取，依据于请求中是否有session的标识符JSESSIONID，有就返回对应的session对象，没有就创建新的session对象，并将JSESSIONID作为Cookie数据存储在<strong><em>浏览器运存中</em></strong>。（所以只要重启浏览器就会丢失Cookie数据即JSESSIONID，临时存储，session对象存储在服务器中）</li>
+<li>设置session存储时间（默认存储时间：30min）<br><code>hs.setMaxInactiveInterval(int seconds);</code><br><strong><em>注意：</em></strong>在指定时间内session对象没有被使用则销毁，指定时间内使用了就会重新计时。</li>
+<li>设置session立即销毁<br><code>hs.invalidate();</code></li>
+</ul>
+<h3 id="session存储-获取数据"><a href="#session存储-获取数据" class="headerlink" title="session存储/获取数据"></a>session存储/获取数据</h3><ul>
+<li>存储和获取</li>
+</ul>
+<ol>
+<li>存储：<code>hs.setAttribute(String name,Object value);</code><br>可以存放对象。</li>
+<li>获取：<code>String  name = (String) hs.getAttribute(&quot;name&quot;);</code><br>返回Object类型需要强转。</li>
+<li>注意：存储的动作和去除的动作发生在不同的请求中，但是存储要先于取出执行。</li>
+</ol>
+<ul>
+<li>使用时机：<br>一般用户在登录web项目时会将用户的个人信息存储Session中，供其他请求使用。</li>
+</ul>
+<h2 id="Session的特点"><a href="#Session的特点" class="headerlink" title="Session的特点"></a>Session的特点</h2><ul>
+<li>1.依赖于Cookie技术</li>
+<li>2.生命周期为：一次会话<br>JSESSIONID存储在Cookie的临时存储空间中，即浏览器运存中，浏览器关闭就会失效。</li>
+<li>3.默认存储时间30min</li>
+</ul>
+<h2 id="Session的作用域"><a href="#Session的作用域" class="headerlink" title="Session的作用域"></a>Session的作用域</h2><ul>
+<li>一次会话</li>
+<li>当浏览器JSESSIONID和服务器的SESSION对象都未失效时，作用于整个web项目中。</li>
+</ul>
+<h2 id="Session的失效处理"><a href="#Session的失效处理" class="headerlink" title="Session的失效处理"></a>Session的失效处理</h2><ul>
+<li>判断浏览器JSESSIONID和服务器的JSESSIONID是否一致。</li>
+<li>判断根据浏览器JSESSIONID拿到的session对象数据是否为null。</li>
+</ul>
+<h1 id="ServletContext对象的学习"><a href="#ServletContext对象的学习" class="headerlink" title="ServletContext对象的学习"></a>ServletContext对象的学习</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>作用<br>解决了不同用户之间数据的共享问题。</li>
+<li>原理<br>类似session对象的原理，服务器创建一个对象，不同的是所有的用户都可以获取并使用。</li>
+<li>特点</li>
+</ul>
+<ol>
+<li>用户共享</li>
+<li>服务器创建</li>
+</ol>
+<ul>
+<li>作用域<br>整个项目内。</li>
+<li>生命周期<br>服务器启动到服务器关闭。</li>
+</ul>
+<h2 id="ServletContext的使用"><a href="#ServletContext的使用" class="headerlink" title="ServletContext的使用"></a>ServletContext的使用</h2><ul>
+<li>1.获取ServletContext对象，三种获取方式</li>
+</ul>
+<ol>
+<li><code>ServletContext sc = this.getServletContext();</code></li>
+<li><code>ServletContext sc2 = this.getServletConfig().getServletContext();</code></li>
+<li><code>ServletContext sc3 = req.getSession().getServletContext();</code><br>注意：这三种方式创建的ServletContext对象都是同一个。</li>
+</ol>
+<ul>
+<li>2.ServletContext存储数据/获取数据</li>
+</ul>
+<ol>
+<li>存储<br><code>sc.setAttribute(String name,Object value);</code></li>
+<li>获取,返回Object类型<br><code>Object o = sc.getAttribute(String name);</code></li>
+</ol>
+<ul>
+<li>3.全局参数的设置及获取</li>
+</ul>
+<ol>
+<li><p>web.xml中全局数据配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;context-param&gt;</span><br><span class="line">       &lt;param-name&gt;user&lt;/param-name&gt;</span><br><span class="line">       &lt;param-value&gt;zhangsan&lt;/param-value&gt;</span><br><span class="line">   &lt;/context-param&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><em>获取web.xml全局配置数据</em></strong><br><code>sc.getInitParameter(user);</code>返回对应的值String类型。<br><code>sc.getInitParameterNames();</code>返回获取web.xml全局配置数据键名的枚举。<br><strong><em>作用：将静态数据和代码解耦。</em></strong></p>
+</li>
+</ol>
+<ul>
+<li>3.获取项目webroot下资源的绝对路径<br><code>String path = sc.getRealPath(&quot;/doc/1.txt&quot;);</code><br>path为项目根目录补全后的绝对路径。</li>
+<li>4.获取项目webroot下资源的流对象<br><code>InputStream is = sc.getResourceAsStream(&quot;/doc/1.txt&quot;);</code><br>注意：此种方式只能获取项目根目录下的资源流对象，class文件的流对象需要使用类加载器获取。</li>
+</ul>
+<h1 id="ServletConfig对象学习"><a href="#ServletConfig对象学习" class="headerlink" title="ServletConfig对象学习"></a>ServletConfig对象学习</h1><h2 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h2><ul>
+<li>获取web.xml给每个Servlet单独的配置信息    </li>
+</ul>
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><ul>
+<li><p>给每个Servlet单独的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;init-param&gt;</span><br><span class="line">       &lt;param-name&gt;config&lt;/param-name&gt;</span><br><span class="line">       &lt;param-value&gt;utf-8&lt;/param-value&gt;</span><br><span class="line">   &lt;/init-param&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取ServletConfig对象<br><code>ServletConfig sc = this.getServletConfig();</code></p>
+</li>
+<li><p>获取servlet配置信息<br><code>String code = sc.getInitParameter(&quot;config&quot;);</code></p>
+</li>
+</ul>
+<h1 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h1><h2 id="大体组件内容"><a href="#大体组件内容" class="headerlink" title="大体组件内容"></a>大体组件内容</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Server&gt;</span><br><span class="line">	&lt;Service&gt;		//可以配置多个Service</span><br><span class="line">		&lt;Connector /&gt;	//端口 可以有多个端口</span><br><span class="line">		&lt;Connector /&gt;	</span><br><span class="line">		 &lt;Engine&gt;		//引擎 一个Service只能有一个</span><br><span class="line">			 &lt;/Host&gt;	</span><br><span class="line">			 	&lt;context /&gt;	//热部署配置	</span><br><span class="line">			 &lt;/Host&gt;</span><br><span class="line">		 &lt;/Engine&gt;</span><br><span class="line">	&lt;/Service&gt;</span><br><span class="line">&lt;/Server&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="热部署"><a href="#热部署" class="headerlink" title="热部署"></a>热部署</h2><p><code>&lt;Context path=&quot;/项目别名&quot; reloadable=&quot;true&quot; docBase=&quot;项目所在绝对路径&quot; /&gt;</code><br>注意：如果需要映射的docBase下的文件被删除，服务器启动会报错，而冷部署如果webapps下没有，服务器启动也不会报错。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>Servlet使用流程</li>
+</ul>
+<ol>
+<li>设置请求编码格式<br>  通用方式（String编码）<br>  公共配置：get请求数据在请求参数中，和post请求数据在请求体中。</li>
+<li>设置响应编码格式<br>  <code>resp.setContentType(&quot;text/html;charset=utf-8&quot;);</code></li>
+<li>获取请求数据<br>  获取Cookie数据<br>  <code>Cookie[] cks = req.getCookies();</code><em>返回有Cookie对象的数组，遍历注意空指针问题。</em><br>  Session优化<br>  ServletContext优化<br>  获取用户信息<br>  <code>String uname = req.getParameter(&quot;uname&quot;);</code></li>
+<li>处理请求数据<br>  获取业务层对象，调用业务层方法。</li>
+<li>响应处理结果<br>  直接响应<br>  <code>resp.getWriter().writer(&quot;&quot;);</code><br>  请求转发<br>  <code>req.getRequestDispatcher(&quot;servlet别名&quot;).forward(req,resp);</code><br>  响应重定向<br>  <code>resp.sendRedirect(&quot;servlet的uri&quot;);</code></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag"># Servlet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/jQuery的学习/" rel="next" title="jQuery的学习">
+                <i class="fa fa-chevron-left"></i> jQuery的学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/20/Http协议学习/" rel="prev" title="Http协议学习">
+                Http协议学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器"><span class="nav-number">1.</span> <span class="nav-text">服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是服务器？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是服务器？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet技术"><span class="nav-number">2.</span> <span class="nav-text">Servlet技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet概念"><span class="nav-number">2.1.</span> <span class="nav-text">Servlet概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么有Servlet技术？"><span class="nav-number">2.2.</span> <span class="nav-text">为什么有Servlet技术？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#狭义的Servlet是指Java实现的一个接口"><span class="nav-number">2.3.</span> <span class="nav-text">狭义的Servlet是指Java实现的一个接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义的Servlet是指任何实现了这个接口的类"><span class="nav-number">2.4.</span> <span class="nav-text">广义的Servlet是指任何实现了这个接口的类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA配置和使用Tomcat"><span class="nav-number">3.1.</span> <span class="nav-text">IDEA配置和使用Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">3.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成"><span class="nav-number">3.3.</span> <span class="nav-text">组成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet生命周期"><span class="nav-number">4.</span> <span class="nav-text">Servlet生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#具体过程"><span class="nav-number">4.1.</span> <span class="nav-text">具体过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-从第一次接收到请求-到服务器关闭"><span class="nav-number">4.2.</span> <span class="nav-text">1.从第一次接收到请求,到服务器关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-如果web-xml配置了load-on-startup-生命周期从服务器启动-到服务器关闭。"><span class="nav-number">4.3.</span> <span class="nav-text">2.如果web.xml配置了load-on-startup,生命周期从服务器启动,到服务器关闭。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-和doGet-和doPost"><span class="nav-number">5.</span> <span class="nav-text">service()和doGet()和doPost()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-number">5.1.</span> <span class="nav-text">service()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#doGet"><span class="nav-number">5.2.</span> <span class="nav-text">doGet()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#doPost"><span class="nav-number">5.3.</span> <span class="nav-text">doPost()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">5.4.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet常见错误"><span class="nav-number">6.</span> <span class="nav-text">Servlet常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#404错误：资源未找到"><span class="nav-number">6.1.</span> <span class="nav-text">404错误：资源未找到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#500错误：内部服务器错误"><span class="nav-number">6.2.</span> <span class="nav-text">500错误：内部服务器错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#405错误：请求方式不支持"><span class="nav-number">6.3.</span> <span class="nav-text">405错误：请求方式不支持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Request对象"><span class="nav-number">7.</span> <span class="nav-text">Request对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Request对象？"><span class="nav-number">7.1.</span> <span class="nav-text">什么是Request对象？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取请求数据"><span class="nav-number">7.2.</span> <span class="nav-text">获取请求数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request对象作用域"><span class="nav-number">7.3.</span> <span class="nav-text">Request对象作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request对象特点"><span class="nav-number">7.4.</span> <span class="nav-text">Request对象特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Response对象"><span class="nav-number">8.</span> <span class="nav-text">Response对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">8.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置响应数据"><span class="nav-number">8.2.</span> <span class="nav-text">设置响应数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#请求中文乱码解决"><span class="nav-number">9.</span> <span class="nav-text">请求中文乱码解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用String进行数据重新编码"><span class="nav-number">9.1.</span> <span class="nav-text">1.使用String进行数据重新编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-使用公共配置"><span class="nav-number">9.2.</span> <span class="nav-text">2.使用公共配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意-1"><span class="nav-number">9.3.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#请求转发"><span class="nav-number">10.</span> <span class="nav-text">请求转发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应重定向"><span class="nav-number">11.</span> <span class="nav-text">响应重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">12.</span> <span class="nav-text">Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie的作用和特点"><span class="nav-number">12.1.</span> <span class="nav-text">Cookie的作用和特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie的使用"><span class="nav-number">12.2.</span> <span class="nav-text">Cookie的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要进行Cookie校验"><span class="nav-number">12.3.</span> <span class="nav-text">为什么要进行Cookie校验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session技术"><span class="nav-number">13.</span> <span class="nav-text">Session技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session作用及其原理"><span class="nav-number">13.1.</span> <span class="nav-text">Session作用及其原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session的使用"><span class="nav-number">13.2.</span> <span class="nav-text">Session的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Session-获取Session对象"><span class="nav-number">13.2.1.</span> <span class="nav-text">创建Session/获取Session对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session存储-获取数据"><span class="nav-number">13.2.2.</span> <span class="nav-text">session存储/获取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session的特点"><span class="nav-number">13.3.</span> <span class="nav-text">Session的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session的作用域"><span class="nav-number">13.4.</span> <span class="nav-text">Session的作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session的失效处理"><span class="nav-number">13.5.</span> <span class="nav-text">Session的失效处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ServletContext对象的学习"><span class="nav-number">14.</span> <span class="nav-text">ServletContext对象的学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">14.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServletContext的使用"><span class="nav-number">14.2.</span> <span class="nav-text">ServletContext的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ServletConfig对象学习"><span class="nav-number">15.</span> <span class="nav-text">ServletConfig对象学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-1"><span class="nav-number">15.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-1"><span class="nav-number">15.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#server-xml"><span class="nav-number">16.</span> <span class="nav-text">server.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#大体组件内容"><span class="nav-number">16.1.</span> <span class="nav-text">大体组件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#热部署"><span class="nav-number">16.2.</span> <span class="nav-text">热部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">17.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
