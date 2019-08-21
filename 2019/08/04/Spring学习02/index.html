@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="spring整合mybatis导包 1.导入mybatis需要的jar，spring核心jar和日志jar。 2.整合数据访问层必须导入spring-jdbc.jar 3.整合web必须要导入spring-web.jar 4.以及aop，tx。  配置文件1.配置web.xml 1.servlet由tomcat服务器管理，所以不能交由spring管理，那么怎么样获得spring创建的对象？   s">
+<meta name="keywords" content="AOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习02">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/04/Spring学习02/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="spring整合mybatis导包 1.导入mybatis需要的jar，spring核心jar和日志jar。 2.整合数据访问层必须导入spring-jdbc.jar 3.整合web必须要导入spring-web.jar 4.以及aop，tx。  配置文件1.配置web.xml 1.servlet由tomcat服务器管理，所以不能交由spring管理，那么怎么样获得spring创建的对象？   s">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-05T16:18:33.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习02">
+<meta name="twitter:description" content="spring整合mybatis导包 1.导入mybatis需要的jar，spring核心jar和日志jar。 2.整合数据访问层必须导入spring-jdbc.jar 3.整合web必须要导入spring-web.jar 4.以及aop，tx。  配置文件1.配置web.xml 1.servlet由tomcat服务器管理，所以不能交由spring管理，那么怎么样获得spring创建的对象？   s">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/04/Spring学习02/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spring学习02 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/04/Spring学习02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习02
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-04T00:00:00+08:00">2019-08-04</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-06 00:18:33" itemprop="dateModified" datetime="2019-08-06T00:18:33+08:00">2019-08-06</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="spring整合mybatis"><a href="#spring整合mybatis" class="headerlink" title="spring整合mybatis"></a>spring整合mybatis</h1><h2 id="导包"><a href="#导包" class="headerlink" title="导包"></a>导包</h2><ul>
+<li>1.导入mybatis需要的jar，spring核心jar和日志jar。</li>
+<li>2.整合数据访问层必须导入spring-jdbc.jar</li>
+<li>3.整合web必须要导入spring-web.jar</li>
+<li>4.以及aop，tx。</li>
+</ul>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><h3 id="1-配置web-xml"><a href="#1-配置web-xml" class="headerlink" title="1.配置web.xml"></a>1.配置web.xml</h3><ul>
+<li>1.servlet由tomcat服务器管理，所以不能交由spring管理，那么怎么样获得spring创建的对象？</li>
+</ul>
+<ol>
+<li><p>spring为我们封装了一个监听器，来帮助我们加载spring配置文件，即applicationContext.xml。</p>
+</li>
+<li><p>创建监听器的时候，加载了spring配置文件，并创建了webApplicationContext。</p>
+</li>
+<li><p>spring和web整合后，所有的信息都存放在webApplicationContext中</p>
+</li>
+<li><p>ContextLoaderListener源码注解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//* Create a new &#123;@code ContextLoaderListener&#125; that will create a web application</span><br><span class="line">//* context based on the &quot;contextClass&quot; and &quot;contextConfigLocation&quot; servlet context-params.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体web.xml配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--spring封装了一监听器，帮助加载spring配置文件--&gt;</span><br><span class="line">&lt;listener&gt;</span><br><span class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</span><br><span class="line">&lt;/listener&gt;</span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="2-配置applicationContext-xml"><a href="#2-配置applicationContext-xml" class="headerlink" title="2.配置applicationContext.xml"></a>2.配置applicationContext.xml</h3><ul>
+<li>1.因为IoC控制反转，spring可以帮助我们管理需要的对象，因此可以将mybatis.xml中的配置信息，也就是一些类交由spring管理。</li>
+</ul>
+<ol>
+<li><p>管理dataSource，也就是数据库连接信息,spring封装了jdbc，只需要通过<strong><em>设置注入</em></strong>连接需要的信息让它创建连接对象即可。<br><em>DriverManagerDataSource</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/sorm?serverTimezone=GMT&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;password&quot; value=&quot;670322387&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来就是创建SqlSessionFactory对象。<br><em>SqlSessionFactoryBean</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;factory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;</span><br><span class="line">	&lt;!--引用dataSource数据库连接信息--&gt;</span><br><span class="line">    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;  </span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>扫描器，相当于mybatis.xml中mappers下package标签，扫描指定的包后会为其对应的接口创建对象<br><em>MapperScannerConfigurer</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;basePackage&quot; value=&quot;com.zbw.mapper&quot;/&gt;</span><br><span class="line">    &lt;!--与sqlSessionFactory关联--&gt;</span><br><span class="line">    &lt;property name=&quot;sqlSessionFactory&quot; ref=&quot;factory&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>spring还可以管理service层，通过创建service实现类。<br>service实现类中需要调用mapper层以获得从数据库查询的数据，因此需要DI<strong><em>依赖注入</em></strong>依赖由spring扫描mapper包后创建的对象。”接口名首字母小写”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;airportServiceImpl&quot; class=&quot;com.zbw.service.impl.AirportServiceImpl&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;airportMapper&quot; ref=&quot;airportMapper&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>在servlet初始化时，实例化service，就是从webApplicationContext中取出spring帮我们创建的对象。</p>
+<pre><code>WebApplicationContextUtils是spring提供的用于从servletContext获取webApplicationContext的的工具。</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">   public void init() throws ServletException &#123;</span><br><span class="line">       ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());</span><br><span class="line">       airportService = ac.getBean(&quot;airportServiceImpl&quot;, AirportServiceImpl.class);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h1><h2 id="什么是AOP？"><a href="#什么是AOP？" class="headerlink" title="什么是AOP？"></a>什么是AOP？</h2><ul>
+<li><p>AOP (Aspect Oriented Programing)</p>
+</li>
+<li><p>面向切面编程</p>
+</li>
+<li><p>理解</p>
+</li>
+</ul>
+<ol>
+<li>正常的程序执行流程都是纵向的，自上而下。</li>
+<li>在原有的纵向执行流程中添加横切面。</li>
+<li>在程序原有纵向执行流程中,针对某一个或某一些方法添加通知,形成横切面过程就叫做面向切面编程.</li>
+</ol>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>1.不需要修改原有的代码。</li>
+<li>2.使程序具有<em>高扩展性</em>。</li>
+<li>3.原有功能释放了部分逻辑，使职责更加明确。<br>(将原来复杂的功能(方法)中部分逻辑代码在其前后进行分担)</li>
+</ul>
+<h2 id="常用概念"><a href="#常用概念" class="headerlink" title="常用概念"></a>常用概念</h2><ul>
+<li>原有功能: 切点,pointcut</li>
+<li>前置通知: 在切点之前执行的功能.beforeadvice</li>
+<li>后置通知: 在切点之后执行的功能,afteradvice</li>
+<li>如果切点执行过程中<em>报出</em>异常,会触发异常通知.throwsadvice</li>
+<li>所有功能总称叫做 切面.</li>
+<li>织入: 把切面嵌入到原有功能的过程叫做 织入</li>
+</ul>
+<h2 id="spring提供了2种AOP实现方式"><a href="#spring提供了2种AOP实现方式" class="headerlink" title="spring提供了2种AOP实现方式"></a>spring提供了2种AOP实现方式</h2><h3 id="Schema-based"><a href="#Schema-based" class="headerlink" title="Schema-based"></a>Schema-based</h3><ul>
+<li>每个通知都需要实现接口或类</li>
+<li>配置 spring 配置文件时在<code>&lt;aop:config&gt;</code>配置</li>
+</ul>
+<ol>
+<li>通配符*</li>
+<li>(..)匹配任意参数<br>例：想要拦截com.zbw.test包下的所有类可以：<code>(* com.zbw.test.*.*(..))</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置切面--&gt;</span><br><span class="line">    &lt;aop:config&gt;</span><br><span class="line">&lt;!--配置切点--&gt;</span><br><span class="line">        &lt;aop:pointcut id=&quot;myPoint&quot; expression=&quot;execution(* com.zbw.test.Demo.*(..))&quot;/&gt;</span><br><span class="line">&lt;!--通知--&gt;</span><br><span class="line">        &lt;aop:advisor advice-ref=&quot;myBefore&quot; pointcut-ref=&quot;myPoint&quot;/&gt;</span><br><span class="line">        &lt;aop:advisor advice-ref=&quot;myAfter&quot; pointcut-ref=&quot;myPoint&quot;/&gt;</span><br><span class="line">    &lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置通知类对象，在切面中引用--&gt;</span><br><span class="line">    &lt;bean id=&quot;myBefore&quot; class=&quot;com.zbw.before.Before&quot;/&gt;</span><br><span class="line">    &lt;bean id=&quot;myAfter&quot; class=&quot;com.zbw.after.After&quot;/&gt;</span><br><span class="line">    &lt;bean id=&quot;demo1&quot; class=&quot;com.zbw.test.Demo1&quot;/&gt;</span><br><span class="line">    &lt;bean id=&quot;demo2&quot; class=&quot;com.zbw.test2.Demo2&quot;/&gt;</span><br><span class="line">&lt;!--测试类Demo--&gt;</span><br><span class="line">    &lt;bean id=&quot;demo&quot; class=&quot;com.zbw.test.Demo&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class After implements AfterReturningAdvice &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void afterReturning(Object o, Method method, Object[] objects, Object o1) throws Throwable &#123;</span><br><span class="line">        //Object o  切点方法的返回值</span><br><span class="line">        //Method method 切点方法对象</span><br><span class="line">        //Object[]  objects 切点方法的参数</span><br><span class="line">        //Object o1 切点方法所在类的对象</span><br></pre></td></tr></table></figure>
+
+<h3 id="AspectJ"><a href="#AspectJ" class="headerlink" title="AspectJ"></a>AspectJ</h3><ul>
+<li>每个通知不需要实现接口或类</li>
+<li>配置 spring 配置文件是在<code>&lt;aop:config&gt;</code>的子标签<code>&lt;aop:aspect&gt;</code>中配置</li>
+</ul>
+<p>注意：</p>
+<ol>
+<li>after就算切点报异常也会执行 类似finnaly</li>
+<li>after-returning 切点正常执行才会执行</li>
+<li>执行顺序和配置顺序有关系。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;myAdvice&quot; class=&quot;com.zbw.myadvice.MyAdvice&quot;/&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:aspect ref=&quot;myAdvice&quot;&gt;</span><br><span class="line">        &lt;aop:pointcut id=&quot;myPoint4&quot; expression=&quot;execution(* com.zbw.test.Demo.demo4())&quot;/&gt;</span><br><span class="line">        &lt;aop:after method=&quot;myAfter2&quot; pointcut-ref=&quot;myPoint4&quot;/&gt;</span><br><span class="line">        &lt;aop:after-returning method=&quot;myAfter&quot; pointcut-ref=&quot;myPoint4&quot;/&gt;</span><br><span class="line">        &lt;aop:before method=&quot;myBefore&quot; pointcut-ref=&quot;myPoint4&quot;/&gt;</span><br><span class="line">        &lt;aop:around method=&quot;myArround&quot; pointcut-ref=&quot;myPoint4&quot;/&gt;</span><br><span class="line">    &lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>带参数的配置<br>注意：</li>
+</ul>
+<ol>
+<li>切点配置参数在execution外，用and连接，不能用&amp;&amp;，（xml的特殊符号）<br>spring在转化成java后会转换成&amp;&amp;。</li>
+<li>参数的名称必须都相同，包括通知类中的方法参数名称。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;aop:pointcut id=&quot;myPoint4&quot; expression=&quot;execution(* com.zbw.test.Demo.demo5(String,int)) and args(name1,age1)&quot;/&gt;</span><br><span class="line">&lt;aop:before method=&quot;myBefore&quot; pointcut-ref=&quot;myPoint4&quot; arg-names=&quot;name1,age1&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="配置异常通知-AspectJ"><a href="#配置异常通知-AspectJ" class="headerlink" title="配置异常通知(AspectJ)"></a>配置异常通知(AspectJ)</h2><ul>
+<li>只有当切点报异常才能触发异常通知</li>
+<li>在 spring 中有 AspectJ 方式提供了异常通知的办法.<br>如果希望通过 schema-base 实现需要按照特定的要求自己编写方法.</li>
+</ul>
+<ol>
+<li>新建异常通知类</li>
+<li>在spring配置文件中配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--异常通知类--&gt;</span><br><span class="line">    &lt;bean id=&quot;myThrow&quot; class=&quot;com.zbw.myThrow.MyThrow&quot;/&gt;</span><br><span class="line">&lt;!--aspectJ配置异常通知--&gt;</span><br><span class="line">    &lt;aop:config&gt;</span><br><span class="line">&lt;!--ref：引用异常通知对象--&gt;</span><br><span class="line">        &lt;aop:aspect ref=&quot;myThrow&quot;&gt;</span><br><span class="line">            &lt;aop:pointcut id=&quot;myPoint&quot; expression=&quot;execution(* com.zbw.test.Demo.demo1())&quot;/&gt;</span><br><span class="line">&lt;!--method：异常通知具体的方法名--&gt;</span><br><span class="line">&lt;!--throwing:异常对象名,必须和通知中方法参数名相同--&gt;</span><br><span class="line">            &lt;aop:after-throwing method=&quot;myThrow&quot; pointcut-ref=&quot;myPoint&quot; throwing=&quot;e&quot;/&gt;</span><br><span class="line">        &lt;/aop:aspect&gt;</span><br><span class="line">    &lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="配置异常通知-Schema-base"><a href="#配置异常通知-Schema-base" class="headerlink" title="配置异常通知(Schema-base)"></a>配置异常通知(Schema-base)</h2><pre><code>需要实现ThrowsAdvice接口
+重写afterThrowing方法</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class ScheamThrow implements ThrowsAdvice &#123;</span><br><span class="line">    public void afterThrowing(Exception e)&#123;</span><br><span class="line">        System.out.println(&quot;schema-base异常通知&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring配置中，和普通的schema-base配置相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;schemaThrow&quot; class=&quot;com.zbw.myThrow.ScheamThrow&quot;/&gt;</span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">    &lt;aop:pointcut id=&quot;myPoint2&quot; expression=&quot;execution(* com.zbw.test.Demo.demo2())&quot;/&gt;</span><br><span class="line">    &lt;aop:advisor advice-ref=&quot;schemaThrow&quot; pointcut-ref=&quot;myPoint2&quot;/&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="环绕通知"><a href="#环绕通知" class="headerlink" title="环绕通知"></a>环绕通知</h2><pre><code>环绕通知：前置通知与后置通知放在了一起</code></pre><h3 id="schema-base环绕通知类实现MethodInterceptor（方法拦截器）"><a href="#schema-base环绕通知类实现MethodInterceptor（方法拦截器）" class="headerlink" title="schema-base环绕通知类实现MethodInterceptor（方法拦截器）"></a>schema-base环绕通知类实现MethodInterceptor（方法拦截器）</h3><p>注意：</p>
+<ol>
+<li>其中Object proceed = methodInvocation.proceed();<br>对切点方法放行，并返回该方法的返回值，proceed。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class MyArround implements MethodInterceptor &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(MethodInvocation methodInvocation) throws Throwable &#123;</span><br><span class="line">        System.out.println(&quot;环绕-前置通知&quot;);</span><br><span class="line">        System.out.println(methodInvocation.getMethod());</span><br><span class="line">        Object proceed = methodInvocation.proceed();    //对方法放行</span><br><span class="line">        System.out.println(&quot;环绕-后置通知&quot;);</span><br><span class="line">        return proceed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="spring中注解-基于AspectJ"><a href="#spring中注解-基于AspectJ" class="headerlink" title="spring中注解(基于AspectJ)"></a>spring中注解(基于AspectJ)</h1><ol>
+<li>引入xmlns:context(需要有核心包context)</li>
+<li>在需要被spring管理的类上 @Component<br>@Component(“自定义名字”)如果没有定义，则该类名称首字母小写</li>
+<li>在通知类即切面 @Aspect</li>
+<li>在切点上 @Pointcut<br><code>@Pointcut(&quot;execution(* com.zbw.test2.Demo2.demo22())&quot;)</code></li>
+<li>在通知方法上 @对应的名称(所关联的切点)<br>如：@Before(“com.zbw.test2.Demo2.demo22()”)</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/03/Spring学习01/" rel="next" title="Spring学习01">
+                <i class="fa fa-chevron-left"></i> Spring学习01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/Spring学习03/" rel="prev" title="Spring学习03">
+                Spring学习03 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring整合mybatis"><span class="nav-number">1.</span> <span class="nav-text">spring整合mybatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导包"><span class="nav-number">1.1.</span> <span class="nav-text">导包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-配置web-xml"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.配置web.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置applicationContext-xml"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.配置applicationContext.xml</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">1.3.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AOP"><span class="nav-number">2.</span> <span class="nav-text">AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是AOP？"><span class="nav-number">2.1.</span> <span class="nav-text">什么是AOP？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用概念"><span class="nav-number">2.3.</span> <span class="nav-text">常用概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring提供了2种AOP实现方式"><span class="nav-number">2.4.</span> <span class="nav-text">spring提供了2种AOP实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Schema-based"><span class="nav-number">2.4.1.</span> <span class="nav-text">Schema-based</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AspectJ"><span class="nav-number">2.4.2.</span> <span class="nav-text">AspectJ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置异常通知-AspectJ"><span class="nav-number">2.5.</span> <span class="nav-text">配置异常通知(AspectJ)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置异常通知-Schema-base"><span class="nav-number">2.6.</span> <span class="nav-text">配置异常通知(Schema-base)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环绕通知"><span class="nav-number">2.7.</span> <span class="nav-text">环绕通知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#schema-base环绕通知类实现MethodInterceptor（方法拦截器）"><span class="nav-number">2.7.1.</span> <span class="nav-text">schema-base环绕通知类实现MethodInterceptor（方法拦截器）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring中注解-基于AspectJ"><span class="nav-number">3.</span> <span class="nav-text">spring中注解(基于AspectJ)</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

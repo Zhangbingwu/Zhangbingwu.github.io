@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="JSP九大内置对象复习 九大内置对象是JSP转成java文件后，在局部变量为我们定义好的。   page 当前页面 pageContext 封装了其他八个内置对象 request    封装了请求的所有信息 response 封装了响应的所有信息 Exception 异常对象 out resp.getWriter()获得的用于输出字符流的对象 session req.getSession() 封装">
+<meta name="keywords" content="springMVC - 文件上传与下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springMVC学习02">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/08/springMVC学习02/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="JSP九大内置对象复习 九大内置对象是JSP转成java文件后，在局部变量为我们定义好的。   page 当前页面 pageContext 封装了其他八个内置对象 request    封装了请求的所有信息 response 封装了响应的所有信息 Exception 异常对象 out resp.getWriter()获得的用于输出字符流的对象 session req.getSession() 封装">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-09T11:41:45.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springMVC学习02">
+<meta name="twitter:description" content="JSP九大内置对象复习 九大内置对象是JSP转成java文件后，在局部变量为我们定义好的。   page 当前页面 pageContext 封装了其他八个内置对象 request    封装了请求的所有信息 response 封装了响应的所有信息 Exception 异常对象 out resp.getWriter()获得的用于输出字符流的对象 session req.getSession() 封装">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/08/springMVC学习02/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>springMVC学习02 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/08/springMVC学习02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">springMVC学习02
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-08T00:00:00+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-09 19:41:45" itemprop="dateModified" datetime="2019-08-09T19:41:45+08:00">2019-08-09</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JSP九大内置对象复习"><a href="#JSP九大内置对象复习" class="headerlink" title="JSP九大内置对象复习"></a>JSP九大内置对象复习</h1><ul>
+<li>九大内置对象是JSP转成java文件后，在局部变量为我们定义好的。</li>
+</ul>
+<ol>
+<li>page 当前页面</li>
+<li>pageContext 封装了其他八个内置对象</li>
+<li>request    封装了请求的所有信息</li>
+<li>response 封装了响应的所有信息</li>
+<li>Exception 异常对象</li>
+<li>out resp.getWriter()获得的用于输出字符流的对象</li>
+<li>session req.getSession() 封装了所有会话的信息</li>
+<li>application 所有信息 getServletContext();req.getServletContext;</li>
+<li>config 配置信息</li>
+</ol>
+<h1 id="四大作用域对象"><a href="#四大作用域对象" class="headerlink" title="四大作用域对象"></a>四大作用域对象</h1><ol>
+<li>page 当前页面内不会重新实例化。</li>
+<li>request 一次请求中不会重新实例化。</li>
+<li>session 一次会话中不会重新实例化。<br>  1.客户端中Cookie保留的JSESSIONID和服务器中一致，session就不会重新实例化。(在默认时间内)<pre><code>浏览器关闭（cookie失效）
+默认时间内，没有交互。</code></pre>  2.默认时间在web.xml中修改，<code>&lt;session-config&gt;</code>标签。</li>
+<li>application 服务器启动时实例化，服务器关闭销毁。</li>
+</ol>
+<h1 id="SpringMVC作用域传值"><a href="#SpringMVC作用域传值" class="headerlink" title="SpringMVC作用域传值"></a>SpringMVC作用域传值</h1><h2 id="1-原生Servlet"><a href="#1-原生Servlet" class="headerlink" title="1.原生Servlet"></a>1.原生Servlet</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;demo&quot;)</span><br><span class="line">public String demo(HttpServletRequest req, HttpServletResponse resp)&#123;</span><br><span class="line">    req.setAttribute(&quot;req&quot;,&quot;req的值&quot;);</span><br><span class="line">    req.getSession().setAttribute(&quot;session&quot;,&quot;session的值&quot;);</span><br><span class="line">    req.getServletContext().setAttribute(&quot;application&quot;,&quot;application的值&quot;);</span><br><span class="line">    return &quot;/index.jsp&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Map传值"><a href="#2-Map传值" class="headerlink" title="2.Map传值"></a>2.Map传值</h2><ul>
+<li><p>把 map 中内容放在 request 作用域中<br><code>${requestScope.map}</code></p>
+</li>
+<li><p>spring 会对 map 集合通过 BindingAwareModelMap 进行实例化</p>
+</li>
+<li><p>也可以放对象，集合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;demo2&quot;)</span><br><span class="line">public String demo2(Map&lt;String,Object&gt; map)&#123;</span><br><span class="line">    System.out.println(map.getClass());</span><br><span class="line">    map.put(&quot;map&quot;,&quot;map的值&quot;);</span><br><span class="line">    return &quot;/index.jsp&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><code>class org.springframework.validation.support.BindingAwareModelMap</code></p>
+<h2 id="3-Model"><a href="#3-Model" class="headerlink" title="3.Model"></a>3.Model</h2><ul>
+<li>SpringMVC 中 Model 接口</li>
+<li>把内容最终放入到 request 作用域中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;demo3&quot;)</span><br><span class="line">public String demo3(Model model)&#123;</span><br><span class="line">    model.addAttribute(&quot;model&quot;,menuServiceImpl.show());</span><br><span class="line">    return &quot;/index.jsp&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="4-ModelAndView"><a href="#4-ModelAndView" class="headerlink" title="4.ModelAndView"></a>4.ModelAndView</h2><ul>
+<li>SpringMVC 中 ModelAndView 类</li>
+<li>把内容最终放入到 request 作用域中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;demo4&quot;)</span><br><span class="line">public ModelAndView demo4()&#123;</span><br><span class="line">    //参数为 要跳转的视图</span><br><span class="line">    ModelAndView mav = new ModelAndView(&quot;/index.jsp&quot;);</span><br><span class="line">    mav.addObject(&quot;mav&quot;,&quot;mav的值&quot;);</span><br><span class="line">    return mav;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="文件的上传与下载"><a href="#文件的上传与下载" class="headerlink" title="文件的上传与下载"></a>文件的上传与下载</h1><h2 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h2><ol>
+<li><p>设置响应头中Content-Disposition为attachment 文件为下载类型<br>fileName就是下载时显示的文件名称</p>
+<p><code>response.setHeader(&quot;Content-Disposition&quot;,&quot;attachment;fileName=&quot;+fileName);</code></p>
+<p>浏览器默认为 inline 能显示就显示，显示不了就下载。</p>
+</li>
+<li><p>获得文件夹的绝对路径<br><code>String path = request.getServletContext().getRealPath(&quot;files&quot;);</code></p>
+</li>
+<li><p>将文件转为二进制流<br><code>byte[] bytes = FileUtils.readFileToByteArray(new File(path, fileName));</code></p>
+</li>
+<li><p>获得响应输出流并写出 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ServletOutputStream os = response.getOutputStream();</span><br><span class="line">os.write(bytes);</span><br></pre></td></tr></table></figure>
+
+<p>注意：需要在springmvc中放行静态资源files<br><code>&lt;mvc:resources location=&quot;/files/&quot; mapping=&quot;/files/**&quot;/&gt;</code></p>
+</li>
+</ol>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><ul>
+<li>基于 apache 的 commons-fileupload.jar 完成文件上传.</li>
+<li>MultipartResovler 作用:<br>把客户端上传的文件流转换成 MutipartFile 封装类.<br>通过 MutipartFile 封装类获取到文件流</li>
+<li>表单数据类型分类<br>在<code>&lt;form&gt;</code>的 enctype 属性控制表单类型</li>
+</ul>
+<ol>
+<li>默认值 application/x-www-form-urlencoded,普通表单数据.(少<br>量文字信息)</li>
+<li>text/plain 大文字量时使用的类型.邮件,论文</li>
+<li>multipart/form-data 表单中包含二进制文件内容.</li>
+</ol>
+<ul>
+<li>实现步骤:</li>
+</ul>
+<ol>
+<li><p>导入 springmvc 包和 apache 文件上传 commons-fileupload 和<br>commons-io 两个 jar</p>
+</li>
+<li><p>编写 JSP 页面<br><code>上传: &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;</code></p>
+<p><em>注意：这里的name的值，必须和 MultipartFile 的参数名称相同</em></p>
+</li>
+<li><p>配置 springmvc.xml<br>MutipartResovler解析器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- MultipartResolver解析器 --&gt;</span><br><span class="line">&lt;bean id=&quot;multipartResolver&quot; class=&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;&gt;</span><br><span class="line">    &lt;!--设置最大上传大小 1024字节 1k--&gt;</span><br><span class="line">    &lt;property name=&quot;maxUploadSize&quot; value=&quot;1024&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>异常解析器<br>private Properties exceptionMappings;<br>对Properties类型设置注入。<br><em><code>&lt;prop key=异常全称&gt;跳转的页面&lt;/prop&gt;</code></em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    &lt;!-- 异常解析器 --&gt;</span><br><span class="line">&lt;bean id=&quot;exceptionResolver&quot; class=&quot;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;exceptionMappings&quot;&gt;</span><br><span class="line">        &lt;props&gt;</span><br><span class="line">            &lt;prop key=&quot;org.springframework.web.multipart.MaxUploadSizeExceededException&quot;&gt;/error.jsp&lt;/prop&gt;</span><br><span class="line">        &lt;/props&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写控制器controller</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public String register(Users users, MultipartFile file)&#123;</span><br><span class="line">    //获取文件名称 如:a.png</span><br><span class="line">    String fileName = file.getOriginalFilename();</span><br><span class="line">    //截取文件后缀 如:.png</span><br><span class="line">    String suffix = fileName.substring(fileName.lastIndexOf(&quot;.&quot;));</span><br><span class="line">    //为文件存储时设置名称，UUID静态工厂随机生成UUID对象，并返回此UUID的String对象</span><br><span class="line">    String uuid = UUID.randomUUID().toString();</span><br><span class="line">    String path = request.getServletContext().getRealPath(&quot;images&quot;)+&quot;/&quot;+uuid+suffix;</span><br><span class="line">    //在controller处理异常</span><br><span class="line">    try &#123;</span><br><span class="line">        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(path));</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    //jsp只能取到服务器发布的文件，不能取本地文件,将照片对应的UUID存入数据库。</span><br><span class="line">    users.setPhoto(uuid);</span><br><span class="line">    int index = usersServiceImpl.insUsers(users);</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/springMVC-文件上传与下载/" rel="tag"># springMVC - 文件上传与下载</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/07/springMVC学习01/" rel="next" title="springMVC学习01">
+                <i class="fa fa-chevron-left"></i> springMVC学习01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/09/springMVC学习03/" rel="prev" title="springMVC学习03">
+                springMVC学习03 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JSP九大内置对象复习"><span class="nav-number">1.</span> <span class="nav-text">JSP九大内置对象复习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四大作用域对象"><span class="nav-number">2.</span> <span class="nav-text">四大作用域对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringMVC作用域传值"><span class="nav-number">3.</span> <span class="nav-text">SpringMVC作用域传值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-原生Servlet"><span class="nav-number">3.1.</span> <span class="nav-text">1.原生Servlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Map传值"><span class="nav-number">3.2.</span> <span class="nav-text">2.Map传值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Model"><span class="nav-number">3.3.</span> <span class="nav-text">3.Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ModelAndView"><span class="nav-number">3.4.</span> <span class="nav-text">4.ModelAndView</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件的上传与下载"><span class="nav-number">4.</span> <span class="nav-text">文件的上传与下载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件下载"><span class="nav-number">4.1.</span> <span class="nav-text">文件下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">4.2.</span> <span class="nav-text">文件上传</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

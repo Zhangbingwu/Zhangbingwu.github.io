@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Spring 主要发明者:RodJohnson   轮子理论推崇者:  轮子理论:不用重复发明轮子.  IT行业:直接使用写好的代码.   Spring 框架宗旨:不重新发明技术,让原有技术使用起来更加方便.  Spring 几大核心功能(重点) IoC/DI 控制反转/依赖注入 AOP 面向切面编程 声明式事务.  Spring 框架 runtime test:spring 提供测试功能 Cor">
+<meta name="keywords" content="IoC,DI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习01">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/03/Spring学习01/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="Spring 主要发明者:RodJohnson   轮子理论推崇者:  轮子理论:不用重复发明轮子.  IT行业:直接使用写好的代码.   Spring 框架宗旨:不重新发明技术,让原有技术使用起来更加方便.  Spring 几大核心功能(重点) IoC/DI 控制反转/依赖注入 AOP 面向切面编程 声明式事务.  Spring 框架 runtime test:spring 提供测试功能 Cor">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-04T07:20:38.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习01">
+<meta name="twitter:description" content="Spring 主要发明者:RodJohnson   轮子理论推崇者:  轮子理论:不用重复发明轮子.  IT行业:直接使用写好的代码.   Spring 框架宗旨:不重新发明技术,让原有技术使用起来更加方便.  Spring 几大核心功能(重点) IoC/DI 控制反转/依赖注入 AOP 面向切面编程 声明式事务.  Spring 框架 runtime test:spring 提供测试功能 Cor">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/03/Spring学习01/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spring学习01 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/03/Spring学习01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习01
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-03 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-03T00:00:00+08:00">2019-08-03</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-04 15:20:38" itemprop="dateModified" datetime="2019-08-04T15:20:38+08:00">2019-08-04</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><ul>
+<li>主要发明者:RodJohnson</li>
+</ul>
+<ol>
+<li>轮子理论推崇者:<br>  轮子理论:不用重复发明轮子.<br>  IT行业:直接使用写好的代码.</li>
+</ol>
+<ul>
+<li>Spring 框架宗旨:不重新发明技术,让原有技术使用起来更加方便.</li>
+</ul>
+<h2 id="Spring-几大核心功能-重点"><a href="#Spring-几大核心功能-重点" class="headerlink" title="Spring 几大核心功能(重点)"></a>Spring 几大核心功能(重点)</h2><ul>
+<li>IoC/DI 控制反转/依赖注入</li>
+<li>AOP 面向切面编程</li>
+<li>声明式事务.</li>
+</ul>
+<h2 id="Spring-框架-runtime"><a href="#Spring-框架-runtime" class="headerlink" title="Spring 框架 runtime"></a>Spring 框架 runtime</h2><ul>
+<li>test:spring 提供测试功能</li>
+<li>CoreContainer:核心容器.Spring 启动最基本的条件.</li>
+</ul>
+<ol>
+<li>Beans:Spring 负责创建类对象并管理对象</li>
+<li>Core: 核心类</li>
+<li>Context: 上下文参数.获取外部资源或这管理注解等</li>
+<li>SpEl:expression.jar</li>
+</ol>
+<ul>
+<li>AOP: 实现 aop 功能需要依赖</li>
+</ul>
+<ol>
+<li>Aspects: 切面 AOP 依赖的包</li>
+</ol>
+<ul>
+<li>DataAccess/Integration:spring 封装数据访问层相关内容</li>
+</ul>
+<ol>
+<li>JDBC:Spring 对 JDBC 封装后的代码.</li>
+<li>ORM: 封装了持久层框架的代码.例如 Hibernate</li>
+<li>transactions:对应 spring-tx.jar,声明式事务使用.</li>
+</ol>
+<ul>
+<li>WEB:需要 spring 完成 web 相关功能时需要.</li>
+</ul>
+<ol>
+<li>例如:由tomcat加载spring配置文件时需要有spring-web包</li>
+</ol>
+<h2 id="Spring-框架中重要概念"><a href="#Spring-框架中重要概念" class="headerlink" title="Spring 框架中重要概念"></a>Spring 框架中重要概念</h2><ul>
+<li>容器(Container):Spring 当作一个大容器.</li>
+<li>BeanFactory 接口.老版本.</li>
+</ul>
+<ol>
+<li>新版本中 ApplicationContext 接口,是 BeanFactory 子接口.BeanFactory 的功能在 ApplicationContext 中都有.</li>
+</ol>
+<ul>
+<li>从 Spring3 开始把 Spring 框架的功能拆分成多个 jar.</li>
+</ul>
+<ol>
+<li>Spring2 及以前就一个 jar</li>
+</ol>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><ul>
+<li><p>导入四个核心包和一个日志包<br>core<br>context<br>bean<br>expression<br>commons-logging</p>
+</li>
+<li><p>全局配置文件 applicationContext.xml</p>
+</li>
+</ul>
+<ol>
+<li><p>文件名称和路径自定义.</p>
+</li>
+<li><p>记住 Spring 容器 ApplicationContext,applicationContext.xml 配置的信息最终存储到了 AppliationContext 容器中.</p>
+</li>
+<li><p>spring 配置文件是基于 schema(模式)<br>3.1    schema 文件扩展名.xsd<br>3.2    把 schema 理解成 DTD 的升级版，但是比 DTD 具备更好的扩展性.<br>3.3    每次引入一个 xsd 文件是一个 namespace(xmlns)</p>
+</li>
+<li><p>通过<code>&lt;bean/&gt;</code> 创建对象.</p>
+</li>
+<li><p>注意：<em>默认配置文件被加载时创建对象</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- id 表示获取到对象标识 class 创建哪个类的对象 --&gt;</span><br><span class="line">        &lt;bean id=&quot;peo&quot; class=&quot;com.zbw.pojo.People&quot;/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可扩展性体现在，如果需要新的配置，只需要在xmlns声明，并把schema文件引入。</p>
+</li>
+</ol>
+<h1 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h1><h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><ol>
+<li>中文名称:控制反转</li>
+<li>英文名称:(Inversion of Control)</li>
+</ol>
+<h2 id="IoC-是什么"><a href="#IoC-是什么" class="headerlink" title="IoC 是什么?"></a>IoC 是什么?</h2><ol>
+<li>IoC 完成的事情原先由程序员主动通过 new 实例化对象事情,转交给 Spring 负责.</li>
+<li>控制反转中控制指的是:控制类的对象.</li>
+<li>控制反转中反转指的是转交给 Spring 负责.</li>
+</ol>
+<p>让程序员与对象进行解耦，将类的实例化交给spring来控制。</p>
+<ul>
+<li>IoC 最大的作用:<em>解耦</em>.</li>
+</ul>
+<ol>
+<li>程序员不需要管理对象.解除了对象管理和程序员之间的耦合.</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
+<li><p>在applicationContext.xml配置文件中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- id 表示获取到对象标识 class 创建哪个类的对象 --&gt;</span><br><span class="line">&lt;bean id=&quot;peo&quot; class=&quot;com.zbw.pojo.People&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//加载xml文件，并在加载时完成所需对象的创建。</span><br><span class="line">ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line"></span><br><span class="line">//getBean(“&lt;bean&gt;标签id值”,返回值类型);如果没有第二个参数,默认是 Object</span><br><span class="line">People people = ac.getBean(&quot;peo&quot;, People.class);</span><br><span class="line"></span><br><span class="line">System.out.println(people);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>还可以通过<br><code>String[] strs = ac.getBeanDefinitionNames();</code><br>获取到由spring现在管理的对象的数组。</p>
+</li>
+</ol>
+<h1 id="spring中创建对象的三种方式"><a href="#spring中创建对象的三种方式" class="headerlink" title="spring中创建对象的三种方式"></a>spring中创建对象的三种方式</h1><h2 id="1-通过构造方法创建"><a href="#1-通过构造方法创建" class="headerlink" title="1.通过构造方法创建"></a>1.通过构造方法创建</h2><ol>
+<li>无参构造创建:默认情况.</li>
+<li>有参构造创建:需要明确配置<br>  需要在类中提供有参构造方法<br>  在 applicationContext.xml 中设置调用哪个构造方法创建对象</li>
+</ol>
+<p>注意：如果设定的条件匹配多个构造方法执行最后的构造方法<br>    index: 参数的索引,从 0 开始<br>    name: 参数名<br>    type:类型(区分开关键字和封装类 int 和 Integer)<br>    ref:如果构造方法的参数是一个对象bean，用来引用对象。<br>        如：com.zbw.pojo.Teacher<br>配置代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;peo&quot; class=&quot;com.zbw.pojo.People&quot;&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;0&quot; name=&quot;id&quot; type=&quot;java.lang.Integer&quot; value=&quot;123&quot;/&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;1&quot; name=&quot;name&quot; type=&quot;java.lang.String&quot; value=&quot;王五&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例工厂创建"><a href="#实例工厂创建" class="headerlink" title="实例工厂创建"></a>实例工厂创建</h2><ul>
+<li>什么是实例工厂？<br>就是先要创建工厂才能创建对象。</li>
+</ul>
+<h2 id="静态工厂创建"><a href="#静态工厂创建" class="headerlink" title="静态工厂创建"></a>静态工厂创建</h2><ul>
+<li>什么是静态工厂？<br>能供直接创建对象。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--动态工厂配置--&gt;</span><br><span class="line">&lt;!--    &lt;bean id=&quot;peopleFactory&quot; class=&quot;com.zbw.factory.PeopleFactory&quot;/&gt;--&gt;</span><br><span class="line">&lt;!--    &lt;bean id=&quot;peo2&quot; factory-bean=&quot;peopleFactory&quot; factory-method=&quot;newInstance&quot;/&gt;--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--静态工厂配置--&gt;</span><br><span class="line">&lt;!--其实就是类直接通过静态工厂创建--&gt;</span><br><span class="line">    &lt;bean id=&quot;peo3&quot; class=&quot;com.zbw.factory.PeopleFactory&quot; factory-method=&quot;newInstance&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="对对象的属性赋值"><a href="#对对象的属性赋值" class="headerlink" title="对对象的属性赋值"></a>对对象的属性赋值</h1><h2 id="1-在用有参构造创建对象时，对参数赋值。"><a href="#1-在用有参构造创建对象时，对参数赋值。" class="headerlink" title="1.在用有参构造创建对象时，对参数赋值。"></a>1.在用有参构造创建对象时，对参数赋值。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;peo&quot; class=&quot;com.zbw.pojo.People&quot;&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;0&quot; name=&quot;id&quot; type=&quot;java.lang.Integer&quot; value=&quot;123&quot;/&gt;</span><br><span class="line">    &lt;constructor-arg index=&quot;1&quot; name=&quot;name&quot; type=&quot;java.lang.String&quot; value=&quot;王五&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-设置注入-其通过对象的set方法实现，必须要有set方法"><a href="#2-设置注入-其通过对象的set方法实现，必须要有set方法" class="headerlink" title="2.设置注入(其通过对象的set方法实现，必须要有set方法)"></a>2.设置注入(其通过对象的set方法实现，必须要有set方法)</h2><ul>
+<li><p>属性为基本数据类型或String时<br><code>&lt;property name=&quot;name&quot; value=&quot;李狗蛋&quot;/&gt;</code></p>
+</li>
+<li><p>对象属性为Set集合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;property name=&quot;sets&quot;&gt;</span><br><span class="line">    &lt;set&gt;</span><br><span class="line">        &lt;value &gt;1&lt;/value&gt;</span><br><span class="line">        &lt;value &gt;2&lt;/value&gt;</span><br><span class="line">    &lt;/set&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对象属性为List<br>注意：如果List中只有一个值<br><code>&lt;property name=&quot;lists&quot; value=&quot;1,2,3&quot;/&gt;</code><br>这样也是只有一个值。这点和数组相同。</p>
+</li>
+<li><p>对象属性为Map时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;property name=&quot;maps&quot;&gt;</span><br><span class="line">    &lt;map&gt;</span><br><span class="line">        &lt;entry key=&quot;1&quot; value=&quot;你&quot;/&gt;</span><br><span class="line">        &lt;entry key=&quot;2&quot; value=&quot;好&quot;/&gt;</span><br><span class="line">    &lt;/map&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h1><h2 id="名称-1"><a href="#名称-1" class="headerlink" title="名称"></a>名称</h2><ul>
+<li>中文名称:依赖注入</li>
+<li>英文名称((Dependency Injection)</li>
+</ul>
+<h2 id="DI-是什么"><a href="#DI-是什么" class="headerlink" title="DI 是什么?"></a>DI 是什么?</h2><ul>
+<li>DI 和 IoC 是一样的</li>
+<li>当一个类(A)中需要依赖另一个类()对象时,把 B 赋值给 A 的过程就叫做依赖注入.</li>
+</ul>
+<h2 id="代码体现"><a href="#代码体现" class="headerlink" title="代码体现"></a>代码体现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;people&quot; class=&quot;com.zbw.pojo.People&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;desk&quot; ref=&quot;desk&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=&quot;desk&quot; class=&quot;com.zbw.pojo.Desk&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;id&quot; value=&quot;1&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;price&quot; value=&quot;18&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>people类中需要依赖desk，将desk类赋值给people的过程就是DI，依赖注入。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/IoC/" rel="tag"># IoC</a>
+          
+            <a href="/tags/DI/" rel="tag"># DI</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/02/MyBatis学习03/" rel="next" title="MyBatis学习03">
+                <i class="fa fa-chevron-left"></i> MyBatis学习03
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/04/Spring学习02/" rel="prev" title="Spring学习02">
+                Spring学习02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-几大核心功能-重点"><span class="nav-number">1.1.</span> <span class="nav-text">Spring 几大核心功能(重点)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-框架-runtime"><span class="nav-number">1.2.</span> <span class="nav-text">Spring 框架 runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-框架中重要概念"><span class="nav-number">1.3.</span> <span class="nav-text">Spring 框架中重要概念</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IoC"><span class="nav-number">3.</span> <span class="nav-text">IoC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#名称"><span class="nav-number">3.1.</span> <span class="nav-text">名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC-是什么"><span class="nav-number">3.2.</span> <span class="nav-text">IoC 是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.3.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring中创建对象的三种方式"><span class="nav-number">4.</span> <span class="nav-text">spring中创建对象的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-通过构造方法创建"><span class="nav-number">4.1.</span> <span class="nav-text">1.通过构造方法创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例工厂创建"><span class="nav-number">4.2.</span> <span class="nav-text">实例工厂创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态工厂创建"><span class="nav-number">4.3.</span> <span class="nav-text">静态工厂创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对对象的属性赋值"><span class="nav-number">5.</span> <span class="nav-text">对对象的属性赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-在用有参构造创建对象时，对参数赋值。"><span class="nav-number">5.1.</span> <span class="nav-text">1.在用有参构造创建对象时，对参数赋值。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-设置注入-其通过对象的set方法实现，必须要有set方法"><span class="nav-number">5.2.</span> <span class="nav-text">2.设置注入(其通过对象的set方法实现，必须要有set方法)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DI"><span class="nav-number">6.</span> <span class="nav-text">DI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#名称-1"><span class="nav-number">6.1.</span> <span class="nav-text">名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DI-是什么"><span class="nav-number">6.2.</span> <span class="nav-text">DI 是什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码体现"><span class="nav-number">6.3.</span> <span class="nav-text">代码体现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

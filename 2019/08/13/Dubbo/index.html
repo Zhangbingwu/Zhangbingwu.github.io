@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="SOA (Service Oriented Ambiguity) 面向服务架构   有一个专门提供服务的单元。 其他所有单元都调用这个服务。   使用SOA架构   不会出现多个项目能够直接访问数据库，保护了数据的安全。 开发时可以实现代码的复用。   实现SOA架构时,常用服务.   Dubbo 做为服务. WebService 做为服务. Dubbox 做为服务. 服务方就是web项目,调用w">
+<meta name="keywords" content="Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo学习">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/13/Dubbo/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="SOA (Service Oriented Ambiguity) 面向服务架构   有一个专门提供服务的单元。 其他所有单元都调用这个服务。   使用SOA架构   不会出现多个项目能够直接访问数据库，保护了数据的安全。 开发时可以实现代码的复用。   实现SOA架构时,常用服务.   Dubbo 做为服务. WebService 做为服务. Dubbox 做为服务. 服务方就是web项目,调用w">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-14T13:43:36.276Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dubbo学习">
+<meta name="twitter:description" content="SOA (Service Oriented Ambiguity) 面向服务架构   有一个专门提供服务的单元。 其他所有单元都调用这个服务。   使用SOA架构   不会出现多个项目能够直接访问数据库，保护了数据的安全。 开发时可以实现代码的复用。   实现SOA架构时,常用服务.   Dubbo 做为服务. WebService 做为服务. Dubbox 做为服务. 服务方就是web项目,调用w">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/13/Dubbo/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Dubbo学习 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/13/Dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Dubbo学习
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-13 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-13T00:00:00+08:00">2019-08-13</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-14 21:43:36" itemprop="dateModified" datetime="2019-08-14T21:43:36+08:00">2019-08-14</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SOA"><a href="#SOA" class="headerlink" title="SOA"></a>SOA</h1><ul>
+<li>(Service Oriented Ambiguity)</li>
+<li>面向服务架构</li>
+</ul>
+<ol>
+<li>有一个专门提供服务的单元。</li>
+<li>其他所有单元都调用这个服务。</li>
+</ol>
+<ul>
+<li>使用SOA架构</li>
+</ul>
+<ol>
+<li>不会出现多个项目能够直接访问数据库，保护了数据的安全。</li>
+<li>开发时可以实现代码的复用。</li>
+</ol>
+<ul>
+<li>实现SOA架构时,常用服务.</li>
+</ul>
+<ol>
+<li>Dubbo 做为服务.</li>
+<li>WebService 做为服务.</li>
+<li>Dubbox 做为服务.</li>
+<li>服务方就是web项目,调用web项目的控制器.<br>  使用HttpClient可以调用其他项目的控制器.</li>
+</ol>
+<h1 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h1><ul>
+<li><p>(Remote Procedure Call Protocol)</p>
+</li>
+<li><p>远程过程调用协议</p>
+</li>
+<li><p>解析：<br>客户端在通过互联网调用远程服务器的功能时，不知道功能的具体实现，只知道它提供了什么功能。</p>
+</li>
+<li><p>优点：<br>数据安全性。</p>
+</li>
+</ul>
+<h1 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h1><ul>
+<li>Dubbo:一个分布式、高性能、透明化的<em>RPC服务框架</em></li>
+<li>作用:提供服务自动注册、自动发现等高效服务治理方案.</li>
+</ul>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><ol>
+<li>Provider :提供者,服务发布方,方法及其实现</li>
+<li>Consumer:消费者, 调用服务方</li>
+<li>Container:Dubbo容器.依赖于Spring容器.</li>
+<li>Registry: 注册中心.当Container启动时把所有可以提供的服务列表上Registry中进行注册.<br>  作用:告诉Consumer提供了什么服务和服务方在哪里.</li>
+<li>Monitor:监听器</li>
+</ol>
+<ul>
+<li>注意：</li>
+</ul>
+<ol>
+<li>所有的角色都是可以在单独的服务器上.所以必须遵守特定的协议.</li>
+<li>只有consumer在invoke provider方法时是同步的，其他步骤都是异步的。</li>
+</ol>
+<h2 id="运行原理"><a href="#运行原理" class="headerlink" title="运行原理"></a>运行原理</h2><ol>
+<li>首先启动bubbo容器，加载provider。</li>
+<li>加载完成后，向registry注册中心注册其服务列表，地址。</li>
+<li>consumer启动后，去registry获取服务列表以及provider地址，进行订阅。</li>
+<li>当provider有修改后，注册中心会把消息推送给consumer。<br>1.使用了观察者设计模式(又叫发布/订阅设计模式)</li>
+<li>根据获取到的provider地址，调用provider功能。<br>1.consumer方使用了代理设计模式，创建了一个provider方类的一个代理对象，通过代理对象获取provider中真实功能，起到了保护provider的作用。</li>
+<li>Consumer和Provider每隔1分钟向Monitor发送统计信息,统计信息包含,访问次数,频率等.</li>
+</ol>
+<h1 id="注册中心使用zookeeper"><a href="#注册中心使用zookeeper" class="headerlink" title="注册中心使用zookeeper"></a>注册中心使用zookeeper</h1><ul>
+<li>发布订阅功能.把zookeeper当作注册中心原因.</li>
+<li>分布式/集群管理功能.</li>
+</ul>
+<h1 id="Dubbo支持的协议"><a href="#Dubbo支持的协议" class="headerlink" title="Dubbo支持的协议"></a>Dubbo支持的协议</h1><ul>
+<li>1.Dubbo</li>
+</ul>
+<ol>
+<li>Dubbo官方推荐的协议.</li>
+<li>本质:使用NIO和线程池进行处理.</li>
+<li>缺点:大文件传输时可能出现文件传输失败问题.</li>
+</ol>
+<ul>
+<li>2.RMI</li>
+</ul>
+<ol>
+<li>JDK提供的协议,远程方法调用协议.</li>
+<li>缺点:偶尔连接失败.</li>
+<li>优点:JDK原生,不需要进行额外配置(导入jar)</li>
+</ol>
+<ul>
+<li>3.Hession</li>
+</ul>
+<ol>
+<li>优点:基于http协议,http请求支持.</li>
+<li>缺点:需要额外导入jar,并在短连接时性能低</li>
+</ol>
+<h1 id="Maven打包插件Assembly"><a href="#Maven打包插件Assembly" class="headerlink" title="Maven打包插件Assembly"></a>Maven打包插件Assembly</h1><pre><code>对provider进行打包，让服务方可以在其他及其运行。</code></pre><ol>
+<li><p>在provider项目(实现类项目)中pom.xml中配置assembly插件信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定项目的打包插件信息 --&gt;</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!-- 指定打包描述文件的位置：相对项目根目录的路径 --&gt;</span><br><span class="line">        &lt;!-- assembly打包的描述文件 --&gt;</span><br><span class="line">        &lt;descriptor&gt;assembly/assembly.xml&lt;/descriptor&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">    &lt;executions&gt;</span><br><span class="line">        &lt;execution&gt;</span><br><span class="line">            &lt;id&gt;make-assembly&lt;/id&gt;</span><br><span class="line">            &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">                &lt;goal&gt;single&lt;/goal&gt;</span><br><span class="line">            &lt;/goals&gt;</span><br><span class="line">        &lt;/execution&gt;</span><br><span class="line">    &lt;/executions&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目根目录下新建assembly文件夹</p>
+</li>
+<li><p>在assembly文件夹中新建assembly.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;</span><br><span class="line">&lt;assembly</span><br><span class="line">        xmlns=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3&quot;</span><br><span class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">        xsi:schemaLocation=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3</span><br><span class="line">        http://maven.apache.org/xsd/assembly-1.1.3.xsd&quot;&gt;</span><br><span class="line">    &lt;!-- 该字符会添加到最终tar.gz包的名称后面，作为后缀 --&gt;</span><br><span class="line">    &lt;id&gt;assembly&lt;/id&gt;</span><br><span class="line">    &lt;!-- 指定打包的格式为tar.gz，该类型压缩包在linux中比较常见 --&gt;</span><br><span class="line">    &lt;formats&gt;</span><br><span class="line">        &lt;format&gt;tar.gz&lt;/format&gt;</span><br><span class="line">    &lt;/formats&gt;</span><br><span class="line">    &lt;!-- 在tar.gz压缩包中是否包含根文件夹，该根文件夹名称和tar.gz去掉id后缀一致 --&gt;</span><br><span class="line">    &lt;includeBaseDirectory&gt;true&lt;/includeBaseDirectory&gt;</span><br><span class="line">    &lt;fileSets&gt;</span><br><span class="line">        &lt;!-- 将项目根路径下assembly/bin路径中的内容打包到压缩包中的根目录下的bin目录中 --&gt;</span><br><span class="line">        &lt;fileSet&gt;</span><br><span class="line">            &lt;!-- 相对项目根路径的相对路径 --&gt;</span><br><span class="line">            &lt;directory&gt;assembly/bin&lt;/directory&gt;</span><br><span class="line">            &lt;outputDirectory&gt;bin&lt;/outputDirectory&gt;</span><br><span class="line">            &lt;!-- 设置最终tar.gz中该文件夹下的权限，跟linux权限写法一致 --&gt;</span><br><span class="line">            &lt;fileMode&gt;0755&lt;/fileMode&gt;</span><br><span class="line">        &lt;/fileSet&gt;</span><br><span class="line">        &lt;!-- 将项目根路径下assembly/conf路径中的内容打包到压缩包中的根目录下的conf目录中 --&gt;</span><br><span class="line">        &lt;fileSet&gt;</span><br><span class="line">            &lt;directory&gt;assembly/conf&lt;/directory&gt;</span><br><span class="line">            &lt;outputDirectory&gt;conf&lt;/outputDirectory&gt;</span><br><span class="line">            &lt;!-- 设置其linux权限 --&gt;</span><br><span class="line">            &lt;fileMode&gt;0644&lt;/fileMode&gt;</span><br><span class="line">        &lt;/fileSet&gt;</span><br><span class="line">    &lt;/fileSets&gt;</span><br><span class="line">    &lt;!-- 将所有依赖的jar包打包到压缩包中的根目录下的lib目录中 --&gt;</span><br><span class="line">    &lt;!-- 此lib目录中包含自己开发的项目jar包以及demo_service.jar，还有第三方的jar包 --&gt;</span><br><span class="line">    &lt;dependencySets&gt;</span><br><span class="line">        &lt;dependencySet&gt;</span><br><span class="line">            &lt;outputDirectory&gt;lib&lt;/outputDirectory&gt;</span><br><span class="line">        &lt;/dependencySet&gt;</span><br><span class="line">    &lt;/dependencySets&gt;</span><br><span class="line">&lt;/assembly&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压下载的dubbo-monitor-simple-2.5.3-assembly.tar.gz压缩包,把解压后的bin和conf粘贴到项目下assembly文件夹中.</p>
+<p>注意：清空conf/dubbo.properties中内容(zookeeper信息).</p>
+</li>
+<li><p>右键项目–&gt; maven install<br>在target下出现: 项目名-版本-assembly.tar.gz压缩包</p>
+</li>
+<li><p>把压缩包复制到window或linux中<br>window中使用start.bat启动,关闭命令窗口关闭服务.<br>linux中使用start.sh启动使用stop.sh关闭.</p>
+</li>
+</ol>
+<h1 id="Dubbo超时问题"><a href="#Dubbo超时问题" class="headerlink" title="Dubbo超时问题"></a>Dubbo超时问题</h1><p><a href="https://www.cnblogs.com/xuwc/p/8974709.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuwc/p/8974709.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Dubbo/" rel="tag"># Dubbo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/12/Maven项目热部署/" rel="next" title="Maven项目热部署">
+                <i class="fa fa-chevron-left"></i> Maven项目热部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/13/Dubbo搭建问题/" rel="prev" title="Dubbo搭建问题">
+                Dubbo搭建问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SOA"><span class="nav-number">1.</span> <span class="nav-text">SOA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPC"><span class="nav-number">2.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dubbo"><span class="nav-number">3.</span> <span class="nav-text">Dubbo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">3.1.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行原理"><span class="nav-number">3.2.</span> <span class="nav-text">运行原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注册中心使用zookeeper"><span class="nav-number">4.</span> <span class="nav-text">注册中心使用zookeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dubbo支持的协议"><span class="nav-number">5.</span> <span class="nav-text">Dubbo支持的协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Maven打包插件Assembly"><span class="nav-number">6.</span> <span class="nav-text">Maven打包插件Assembly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dubbo超时问题"><span class="nav-number">7.</span> <span class="nav-text">Dubbo超时问题</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

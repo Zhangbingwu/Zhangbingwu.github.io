@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="getMapper()原理这是源码中的注解，该抽象方法返回一个绑定了SqlSession的mapper对象。 123456/** * Retrieves a mapper. * @param &amp;lt;T&amp;gt; the mapper type * @param type Mapper interface class * @return a mapper bound to this SqlSessi">
+<meta name="keywords" content="OpenSessionInView,动态SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis学习02">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/01/MyBatis学习02/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="getMapper()原理这是源码中的注解，该抽象方法返回一个绑定了SqlSession的mapper对象。 123456/** * Retrieves a mapper. * @param &amp;lt;T&amp;gt; the mapper type * @param type Mapper interface class * @return a mapper bound to this SqlSessi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-01T16:44:58.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis学习02">
+<meta name="twitter:description" content="getMapper()原理这是源码中的注解，该抽象方法返回一个绑定了SqlSession的mapper对象。 123456/** * Retrieves a mapper. * @param &amp;lt;T&amp;gt; the mapper type * @param type Mapper interface class * @return a mapper bound to this SqlSessi">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/01/MyBatis学习02/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MyBatis学习02 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/01/MyBatis学习02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MyBatis学习02
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-01T00:00:00+08:00">2019-08-01</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-02 00:44:58" itemprop="dateModified" datetime="2019-08-02T00:44:58+08:00">2019-08-02</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="getMapper"><a href="#getMapper" class="headerlink" title="getMapper()"></a>getMapper()</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>这是源码中的注解，该抽象方法返回一个绑定了SqlSession的mapper对象。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Retrieves a mapper.</span><br><span class="line"> * @param &lt;T&gt; the mapper type</span><br><span class="line"> * @param type Mapper interface class</span><br><span class="line"> * @return a mapper bound to this SqlSession</span><br><span class="line"> */</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>内部使用的时JDK的动态代理模式，为Mapper接口生成一个proxy代理类，该类中的方法使用反射，映射了一个Mapper的实现类，该实现类不因getMapper的存在而存在，而是在使用Mapper.xml时，就有了这个实现类，来实现jdbc查询。</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li><p>在Mapper.xml所在的包下建立一个Mapper接口，注意接口名必须和Mapper.xml相同。</p>
+</li>
+<li><p>在mybatis.xml全局配置中配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;mappers&gt;</span><br><span class="line">&lt;!--使用getMapper()时使用,确定接口所在的包--&gt;</span><br><span class="line">    &lt;package name=&quot;com.zbw.mapper&quot;/&gt;</span><br><span class="line">&lt;/mappers&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接口中定义方法，注意：方法名，返回值类型必须和xml文件中相同。</p>
+</li>
+<li><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);</span><br><span class="line">List&lt;Student&gt; students = studentMapper.selAll();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ol>
+<li>简化了书写，提高了开发效率。</li>
+<li>最主要的可以直接传入多个参数，而不像原来使用map完成多个参数。</li>
+</ol>
+<h2 id="多个参数"><a href="#多个参数" class="headerlink" title="多个参数"></a>多个参数</h2><h3 id="1-接口中直接传入参数"><a href="#1-接口中直接传入参数" class="headerlink" title="1.接口中直接传入参数"></a>1.接口中直接传入参数</h3><p><code>List&lt;Student&gt; selCon(int id,String name);</code></p>
+<ul>
+<li><p>对应的xml中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selCon&quot; resultType=&quot;Student&quot;&gt;    &lt;!--有多个参数可以省略paramType--&gt;</span><br><span class="line">    select * from t_student where id=#&#123;0&#125; or name=#&#123;1&#125;;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>#{}中为 0 1 2 或 param1 param2 param3</p>
+</li>
+</ul>
+<h3 id="2-使用注解"><a href="#2-使用注解" class="headerlink" title="2.使用注解"></a>2.使用注解</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 利用mybatis注解@param，实现原理：mybatis将参数转化为一个map，其中@param中的为map的key，int id的实参为map的value。</span><br><span class="line"> * @param id</span><br><span class="line"> * @param name</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">List&lt;Student&gt; selCon(@Param(&quot;id&quot;) int id, @Param(&quot;name&quot;) String name);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对应的xml中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selCon&quot; resultType=&quot;Student&quot;&gt;    &lt;!--有多个参数可以省略paramType--&gt;</span><br><span class="line">    select * from t_student where id=#&#123;id&#125; or name=#&#123;name&#125;;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="动态SQL"><a href="#动态SQL" class="headerlink" title="动态SQL"></a>动态SQL</h1><h2 id="OGNL"><a href="#OGNL" class="headerlink" title="OGNL"></a>OGNL</h2><ul>
+<li>OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的表达式语言，通过它简单一致的表达式语法，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。</li>
+<li>MyBatis 采用功能强大的基于 OGNL 的表达式来消除其他元素</li>
+<li>无需其他的特殊符号</li>
+</ul>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ol>
+<li>根据不同的条件需要执行不同的 SQL 命令.称为动态 SQL</li>
+<li>MyBatis 中动态 SQL 在 mapper.xml 中添加逻辑判断等.</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>Mapper.xml映射文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--动态sql if标签--&gt;</span><br><span class="line">    &lt;select id=&quot;selAct&quot; resultType=&quot;Student&quot;&gt;</span><br><span class="line">        select * from t_student where 1=1</span><br><span class="line">        &lt;if test=&quot;id!=null and id!=&apos;&apos;&quot;&gt; </span><br><span class="line">            and id=#&#123;id&#125;</span><br><span class="line">        &lt;/if&gt;</span><br><span class="line">        &lt;if test=&quot;name!=null and name!=&apos;&apos;&quot;&gt;</span><br><span class="line">            and name=#&#123;name&#125;</span><br><span class="line">        &lt;/if&gt;</span><br><span class="line">        &lt;if test=&quot;age!=null and age!=&apos;&apos;&quot;&gt;</span><br><span class="line">            and age=#&#123;age&#125;</span><br><span class="line">        &lt;/if&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--set标签--&gt;</span><br><span class="line">    &lt;update id=&quot;update&quot; parameterType=&quot;Student&quot;&gt;</span><br><span class="line">        update t_student</span><br><span class="line">        &lt;set&gt;</span><br><span class="line">            id=#&#123;id&#125;,</span><br><span class="line">            &lt;if test=&quot;name!=null and name!=&apos;&apos;&quot;&gt;</span><br><span class="line">                name=#&#123;name&#125;,</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">            &lt;if test=&quot;age!=null and age!=&apos;&apos;&quot;&gt;</span><br><span class="line">                age=#&#123;age&#125;,</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">        &lt;/set&gt;</span><br><span class="line">        where id=#&#123;id&#125;</span><br><span class="line">    &lt;/update&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--where标签--&gt;</span><br><span class="line">    &lt;select id=&quot;selAct&quot; resultType=&quot;Student&quot;&gt;</span><br><span class="line">        select * from t_student</span><br><span class="line">        &lt;where&gt;</span><br><span class="line">            &lt;if test=&quot;id!=null and id!=&apos;&apos;&quot;&gt;</span><br><span class="line">                and id=#&#123;id&#125;</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">            &lt;if test=&quot;name!=null and name!=&apos;&apos;&quot;&gt;</span><br><span class="line">                and name=#&#123;name&#125;</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">            &lt;if test=&quot;age!=null and age!=&apos;&apos;&quot;&gt;</span><br><span class="line">                and age=#&#123;age&#125;</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">        &lt;/where&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--choose when otherwise标签--&gt;</span><br><span class="line">    &lt;select id=&quot;selCho&quot; resultType=&quot;Student&quot;&gt;</span><br><span class="line">        select * from t_student</span><br><span class="line">        &lt;where&gt;</span><br><span class="line">            &lt;choose&gt;</span><br><span class="line">                &lt;when test=&quot;id!=null and id!=&apos;&apos;&quot;&gt;</span><br><span class="line">                    and id=#&#123;id&#125;</span><br><span class="line">                &lt;/when&gt;</span><br><span class="line">                &lt;when test=&quot;name!=null and name!=&apos;&apos;&quot;&gt;</span><br><span class="line">                    and name=#&#123;name&#125;</span><br><span class="line">                &lt;/when&gt;</span><br><span class="line">                &lt;otherwise&gt;</span><br><span class="line">                    and id=1</span><br><span class="line">                &lt;/otherwise&gt;</span><br><span class="line">            &lt;/choose&gt;</span><br><span class="line">        &lt;/where&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--trim标签--&gt;</span><br><span class="line">    &lt;update id=&quot;update&quot; parameterType=&quot;Student&quot;&gt;</span><br><span class="line">        update t_student</span><br><span class="line">        &lt;trim prefix=&quot;set&quot; suffixOverrides=&quot;,&quot;&gt;</span><br><span class="line">            id=#&#123;id&#125;,</span><br><span class="line">            &lt;if test=&quot;name!=null and name!=&apos;&apos;&quot;&gt;</span><br><span class="line">                name=#&#123;name&#125;,</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">            &lt;if test=&quot;age!=null and age!=&apos;&apos;&quot;&gt;</span><br><span class="line">                age=#&#123;age&#125;,</span><br><span class="line">            &lt;/if&gt;</span><br><span class="line">        &lt;/trim&gt;</span><br><span class="line">        where id=#&#123;id&#125;</span><br><span class="line">    &lt;/update&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--bind标签--&gt;</span><br><span class="line">    &lt;select id=&quot;SelLike&quot; resultType=&quot;Student&quot; &gt;</span><br><span class="line">        select * from t_student</span><br><span class="line">        &lt;where&gt;</span><br><span class="line">            &lt;bind name=&quot;name&quot; value=&quot;&apos;%&apos;+name+&apos;%&apos;&quot;/&gt;</span><br><span class="line">            name like #&#123;name&#125;</span><br><span class="line">        &lt;/where&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--foreach标签--&gt;</span><br><span class="line">    &lt;select id=&quot;selIn&quot; resultType=&quot;Student&quot;&gt;</span><br><span class="line">        select * from t_student where age in</span><br><span class="line">        &lt;foreach collection=&quot;list&quot; item=&quot;age&quot; open=&quot;(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;</span><br><span class="line">            #&#123;age&#125;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">    &lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li><p>where,choose标签，都是如果判断条件为真，执行时会去掉sql语句的开头的and。</p>
+</li>
+<li><p>trim标签 可以自由的添加或去掉，注意是开始和结束位置。<br>prefix 在前面添加内容<br>prefixOverrides 去掉前面内容<br>suffix 在后面添加内容<br>suffixOverrieds 去掉后面内容<br>注意：执行顺序去掉内容后添加内容。</p>
+</li>
+<li><p>bind 标签<br>作用:给参数重新赋值<br>场景:<br>模糊查询<br>在原内容前或后添加内容<br><code>&lt;bind name=&quot;name&quot; value=&quot;&#39;%&#39;+name+&#39;%&#39;&quot;/&gt;</code></p>
+</li>
+<li><p>foreach 标签<br>循环参数内容,还具备在内容的前后添加内容,还具备添加分隔符功能.</p>
+</li>
+</ul>
+<p>适用场景:<br>  in 查询中<br>  批量新增中(mybatis中foreach 效率比较低)</p>
+<p>注意：如果希望批量新增openSession()必须指定<br><code>factory.openSession(ExecutorType.BATCH);</code><br>底层 JDBC 的 PreparedStatement.addBatch();</p>
+<ul>
+<li><p>sql和include标签<br>某些 SQL 片段如果希望复用,可以使用<code>&lt;sql&gt;</code>定义这个片段 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql id=&quot;mysql&quot;&gt; </span><br><span class="line">  id,name,age </span><br><span class="line">&lt;/sql&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>在&lt;select&gt;或&lt;delete&gt;或&lt;update&gt;或&lt;insert&gt;中使用&lt;include&gt;</code>引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;&quot;&gt; </span><br><span class="line">  select &lt;include refid=&quot;mysql&quot;&gt;&lt;/include&gt; </span><br><span class="line">  from table</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="OpenSessionInView"><a href="#OpenSessionInView" class="headerlink" title="OpenSessionInView"></a>OpenSessionInView</h1><h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><ul>
+<li>线程容器,给线程绑定一个 Object 内容,只要线程不变,可以随时取出.</li>
+<li>改变线程,无法取出内容.</li>
+</ul>
+<h2 id="对SqlSession获取的封装"><a href="#对SqlSession获取的封装" class="headerlink" title="对SqlSession获取的封装"></a>对SqlSession获取的封装</h2><ol>
+<li>factory实例化的过程是一个比较耗费性能的过程。</li>
+<li>从Filter到Servlet是一个线程，（Servlet相当于Filter的一个方法调用），从Servlet调用Service也是一个线程，因此使用ThreadLocal.set()对生产的SqlSession进行存储，同一线程内可以进行获取，提高了开发效率和性能。 </li>
+</ol>
+<ul>
+<li>MyBatisUtil代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">package com.zbw.utils;</span><br><span class="line"></span><br><span class="line">import org.apache.ibatis.io.Resources;</span><br><span class="line">import org.apache.ibatis.session.SqlSession;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line">import org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line"></span><br><span class="line">public class MyBatisUtil &#123;</span><br><span class="line">    </span><br><span class="line">    private static SqlSessionFactory factory = null;</span><br><span class="line">    private static ThreadLocal&lt;SqlSession&gt; tl = new ThreadLocal();</span><br><span class="line">    static &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            InputStream is = Resources.getResourceAsStream(&quot;mybatis.xml&quot;);</span><br><span class="line">            factory = new SqlSessionFactoryBuilder().build(is);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取一个SqlSession对象</span><br><span class="line">     * @return SqlSession对象</span><br><span class="line">     */</span><br><span class="line">    public static SqlSession getSqlSession()&#123;</span><br><span class="line">        SqlSession sqlSession = tl.get();</span><br><span class="line">        if(sqlSession==null)&#123; //这里有点像单例模式，对象存在就返回该对象，不存在就创建</span><br><span class="line">            sqlSession = factory.openSession();</span><br><span class="line">            tl.set(sqlSession);</span><br><span class="line">        &#125;</span><br><span class="line">        return sqlSession;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 关闭SqlSession</span><br><span class="line">     */</span><br><span class="line">    public static void closeSqlSession()&#123;</span><br><span class="line">        if(tl.get()!=null)&#123;</span><br><span class="line">            tl.get().commit();</span><br><span class="line">            tl.get().close();</span><br><span class="line">        &#125;</span><br><span class="line">        tl.set(null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/OpenSessionInView/" rel="tag"># OpenSessionInView</a>
+          
+            <a href="/tags/动态SQL/" rel="tag"># 动态SQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/30/TCPIP学习/" rel="next" title="TCP/IP学习">
+                <i class="fa fa-chevron-left"></i> TCP/IP学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/MyBatis学习03/" rel="prev" title="MyBatis学习03">
+                MyBatis学习03 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#getMapper"><span class="nav-number">1.</span> <span class="nav-text">getMapper()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">1.3.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个参数"><span class="nav-number">1.4.</span> <span class="nav-text">多个参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-接口中直接传入参数"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.接口中直接传入参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用注解"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.使用注解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态SQL"><span class="nav-number">2.</span> <span class="nav-text">动态SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OGNL"><span class="nav-number">2.1.</span> <span class="nav-text">OGNL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">2.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenSessionInView"><span class="nav-number">3.</span> <span class="nav-text">OpenSessionInView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">3.1.</span> <span class="nav-text">ThreadLocal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对SqlSession获取的封装"><span class="nav-number">3.2.</span> <span class="nav-text">对SqlSession获取的封装</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

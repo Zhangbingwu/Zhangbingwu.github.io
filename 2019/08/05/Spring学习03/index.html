@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="spring中的 自动注入 在Spring配置文件中对象名和ref=”id”id名相同使用自动注入,可以不配置&amp;lt;property/&amp;gt;注意：只有ref属性  default-autowire=””的五个取值    no不自动注入 default默认值,根据全局default-autowire=””值.默认全局和局部都没有配置情况下,相当于 no。 byName通过名称自动注入.在 Spr">
+<meta name="keywords" content="声明式事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习03">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/05/Spring学习03/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="spring中的 自动注入 在Spring配置文件中对象名和ref=”id”id名相同使用自动注入,可以不配置&amp;lt;property/&amp;gt;注意：只有ref属性  default-autowire=””的五个取值    no不自动注入 default默认值,根据全局default-autowire=””值.默认全局和局部都没有配置情况下,相当于 no。 byName通过名称自动注入.在 Spr">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-06T12:25:09.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习03">
+<meta name="twitter:description" content="spring中的 自动注入 在Spring配置文件中对象名和ref=”id”id名相同使用自动注入,可以不配置&amp;lt;property/&amp;gt;注意：只有ref属性  default-autowire=””的五个取值    no不自动注入 default默认值,根据全局default-autowire=””值.默认全局和局部都没有配置情况下,相当于 no。 byName通过名称自动注入.在 Spr">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/05/Spring学习03/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Spring学习03 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/05/Spring学习03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习03
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-05 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-05T00:00:00+08:00">2019-08-05</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-06 20:25:09" itemprop="dateModified" datetime="2019-08-06T20:25:09+08:00">2019-08-06</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="spring中的-自动注入"><a href="#spring中的-自动注入" class="headerlink" title="spring中的 自动注入"></a>spring中的 自动注入</h1><ul>
+<li><p>在Spring配置文件中对象名和ref=”id”id名相同使用自动注入,可以不配置<code>&lt;property/&gt;</code><br>注意：只有ref属性</p>
+</li>
+<li><p>default-autowire=””的五个取值</p>
+</li>
+</ul>
+<ol>
+<li>no<br>不自动注入</li>
+<li>default<br>默认值,根据全局default-autowire=””值.默认全局和局部都没有配置情况下,相当于 no。</li>
+<li>byName<br>通过名称自动注入.在 Spring容器(可以通过ac.getDeac.getBeanDefinitionNames()查看当前spring容器中管理的类。</li>
+<li>byType<br>根据类型注入。如果使用这个spring 容器中不可以出现两个相同类型的<code>&lt;bean&gt;</code></li>
+<li>constructor<br>根据构造方法注入。<br>需要提供对应参数的构造方法。<br>底层使用 byName。<br>构造方法参数名和其<code>&lt;bean&gt;</code>的 id相同.</li>
+</ol>
+<ul>
+<li>全局配置自动注入<br>beans 标签下添加 default-autowire=”byName”</li>
+</ul>
+<h1 id="Spring-中加载-properties-文件"><a href="#Spring-中加载-properties-文件" class="headerlink" title="Spring 中加载 properties 文件"></a>Spring 中加载 properties 文件</h1><ol>
+<li><p>需要在src下有资源文件</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--    资源文件路径--&gt;</span><br><span class="line">    &lt;context:property-placeholder location=&quot;classpath:db.properties,classpath:info.propeties&quot;/&gt;</span><br><span class="line">&lt;!--    注解扫描--&gt;</span><br><span class="line">    &lt;context:component-scan base-package=&quot;com.zbw.service.impl&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用${资源文件中key名}获取资源文件对应的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;jdbc.driver&#125;&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc.url&#125;&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc.username&#125;&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.userpassword&#125;&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加扫描器属性sqlSessionFactoryBeanName    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--    扫描器--&gt;</span><br><span class="line">    &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;basePackage&quot; value=&quot;com.zbw.mapper&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;sqlSessionFactoryBeanName&quot; value=&quot;factory&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>注意：<br>    SqlSessionFactoryBean 的 id 不能叫做 sqlSessionFactory。</p>
+<p>在配置资源路径时：多个资源路径之间逗号隔开,不能省略classpath:,这表示从src下去寻找。</p>
+<p><code>&lt;context:property-placeholder location=&quot;classpath:db.properties,classpath:info.propeties&quot;/&gt;</code></p>
+<ol start="5">
+<li>从代码中获取资源文件中的值。<br>资源文件中<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user.birthday=1998-02-20</span><br><span class="line">user.age=22</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>从代码中获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;$&#123;user.birthday&#125;&quot;)</span><br><span class="line">private String birthday;</span><br><span class="line">@Value(&quot;$&#123;user.age&#125;&quot;)</span><br><span class="line">private int age;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为什么不用sqlSessionFactory"><a href="#为什么不用sqlSessionFactory" class="headerlink" title="为什么不用sqlSessionFactory?"></a>为什么不用sqlSessionFactory?</h2><pre><code>因为自动注入优先级太高，spring在加载全局配置文件时，会先将要管理的对象初始化，sqlSessionFactory要使用就要使用ref引用factory对象，这样数据源就不能获取到资源文件中的值。</code></pre><h1 id="bean标签的scope属性"><a href="#bean标签的scope属性" class="headerlink" title="bean标签的scope属性"></a>bean标签的scope属性</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><pre><code>控制对象实例化时的有效范围（单例还是多例）。</code></pre><p>bean标签的scope属性默认是单例的，也就是一个bean不论获取几次，都是同一个对象。</p>
+<h2 id="scope-可取值"><a href="#scope-可取值" class="headerlink" title="scope 可取值"></a>scope 可取值</h2><ol>
+<li>singleton 默认值,单例</li>
+<li>prototype 多例,每次获取重新实例化</li>
+<li>request 每次请求重新实例化</li>
+<li>session 每个会话对象内,对象是单例的.</li>
+<li>application 在 application 对象内是单例</li>
+<li>globalsession    spring推出的一个对象,依赖于spring-webmvc-portlet,类似于 session</li>
+</ol>
+<h1 id="声明式事务"><a href="#声明式事务" class="headerlink" title="声明式事务"></a>声明式事务</h1><h2 id="编程式事务"><a href="#编程式事务" class="headerlink" title="编程式事务"></a>编程式事务</h2><ul>
+<li>由程序员控制事务的开启，提交和回滚。<br>如：openSessionInView编程式事务</li>
+</ul>
+<h2 id="声明式事务-1"><a href="#声明式事务-1" class="headerlink" title="声明式事务"></a>声明式事务</h2><ul>
+<li><p>事务控制代码由spring写好，程序员只用声明那些方法需要声明事务控制，以及如何进行控制。</p>
+</li>
+<li><p>声明式事务针对ServiceImpl类下的方法。</p>
+</li>
+<li><p>事务管理器是基于通知(advice)的。</p>
+</li>
+</ul>
+<h3 id="声明式事务配置"><a href="#声明式事务配置" class="headerlink" title="声明式事务配置"></a>声明式事务配置</h3><ul>
+<li>步骤</li>
+</ul>
+<ol>
+<li><p>数据源配置dataSource</p>
+</li>
+<li><p>事务管理配置    DataSourceTransactionManager</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--事务管理--&gt;</span><br><span class="line">	&lt;bean id=&quot;txManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</span><br><span class="line">	    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于通知的声明式事务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置声明式事务--&gt;</span><br><span class="line">    &lt;tx:advice id=&quot;txAdvice&quot; transaction-manager=&quot;txManager&quot;&gt;</span><br><span class="line">        &lt;tx:attributes&gt;</span><br><span class="line">&lt;!--那些方法需要由事务控制--&gt;</span><br><span class="line">&lt;!--方法名ins开头的方法由事务控制--&gt;</span><br><span class="line">            &lt;tx:method name=&quot;ins*&quot;/&gt;</span><br><span class="line">            &lt;tx:method name=&quot;del*&quot;/&gt;</span><br><span class="line">            &lt;tx:method name=&quot;upd*&quot;/&gt;</span><br><span class="line">            &lt;tx:method name=&quot;*&quot; read-only=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;/tx:attributes&gt;</span><br><span class="line">    &lt;/tx:advice&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>属性解析</li>
+</ul>
+<ol>
+<li><p>name=””哪些方法需要有事务控制<br>支持<code>*</code>通配符</p>
+</li>
+<li><p>readonly=”boolean” 是否为只读事务.<br>如果为 true,告诉数据库此事务为只读事务.数据层面的优化,会对<br>性能有一定提升,所以只要是查询的方法,建议使用此数据。<br>如果为 false(默认值),事务需要提交的事务.建议新增,删除,修<br>改.</p>
+</li>
+<li><p>propagation 控制事务传播行为.</p>
+<p>3.1 什么是控制事务传播行为?<br>当一个具有事务控制的方法被另一个有事务控制的方法调用<br>后,需要如何管理事务(新建事务?在事务中执行?把事务挂起?报异<br>常?)<br>前提:当一个具有事务控制的方法被另一个有事务控制的方法调用。</p>
+<p>3.2REQUIRED(默认值): 如果当前有事务,就在事务中执行,如果当<br>前没有事务,新建一个事务.<br>3.3 SUPPORTS:如果当前有事务就在事务中执行,如果当前没有事<br>务,就在非事务状态下执行.<br>3.4 MANDATORY:必须在事务内部执行,如果当前有事务,就在事务<br>中执行,如果没有事务,报错.<br>3.5 REQUIRES_NEW:必须在事务中执行,如果当前没有事务,新建事<br>务,如果当前有事务,把当前事务挂起.<br>3.6 NOT_SUPPORTED:必须在非事务下执行,如果当前没有事务,正<br>常执行,如果当前有事务,把当前事务挂起.<br>3.7 NEVER:必须在非事务状态下执行,如果当前没有事务,正常执行,<br>如果当前有事务,报错.<br>3.8 NESTED:必须在事务状态下执行.如果没有事务,新建事务,如果<br>当前有事务,创建一个嵌套事务.</p>
+</li>
+<li><p>isolation=”” 事务隔离级别<br>为什么会有事务隔离级别?<br>因为事务操作中存在问题：脏读，不可重复读，幻读。</p>
+<p>1.DEFAULT: 默认值,由底层数据库自动判断应该使用什么隔离界<br>别。oracle默认读取已提交，mysql默认可重复读。<br>2.READ_UNCOMMITTED: 可以读取未提交数据,可能出现脏读,不<br>重复读,幻读.<br>这种级别下，效率最高.<br>3.READ_COMMITTED:只能读取其他事务已提交数据.可以防止脏<br>读,可能出现不可重复读和幻读.<br>4.REPEATABLE_READ: 读取的数据被添加锁,防止其他事务修改<br>此数据,可以防止不可重复读.脏读,可能出现幻读.<br>5.SERIALIZABLE: 排队操作,对整个表添加锁.一个事务在操作数<br>据时,另一个事务等待事务操作完成后才能操作这个表.<br>这种级别下：最安全，效率最低的.</p>
+</li>
+<li><p>rollback-for=”异常类型全限定路径”</p>
+<p>如rollback-for=”java.lang.Exception”</p>
+</li>
+<li><p>1 当出现什么异常时需要进行回滚</p>
+</li>
+<li><p>2 建议:给定该属性值.<br>  手动抛异常一定要给该属性值.<br>  手动抛异常：让程序终止的一种方法，<br>  <code>throw new Exception();</code></p>
+</li>
+<li><p>no-rollback-for=”异常类型全限定路径”<br>当出现什么异常时不滚回事务.</p>
+</li>
+</ol>
+<h1 id="Spring-中常用注解"><a href="#Spring-中常用注解" class="headerlink" title="Spring 中常用注解."></a>Spring 中常用注解.</h1><ol>
+<li><p>@Component 创建类对象,相当于配置<code>&lt;bean/&gt;</code></p>
+</li>
+<li><p>@Service 与@Component 功能相同.<br>写在 ServiceImpl 类上.</p>
+</li>
+<li><p>@Repository 与@Component 功能相同.<br>写在数据访问层类上.</p>
+</li>
+<li><p>@Controller 与@Component 功能相同.<br>写在控制器类上.</p>
+</li>
+<li><p>@Resource(不需要写对象的 get/set)<br>java 中的注解<br>默认按照 byName 注入,如果没有名称对象,按照 byType 注入<br>建议把对象名称和 spring 容器中对象名相同</p>
+</li>
+<li><p>@Autowired(不需要写对象的 get/set)<br>spring 的注解<br>默认按照 byType 注入.</p>
+</li>
+<li><p>@Value() 获取 properties 文件中内容</p>
+</li>
+<li><p>@Pointcut() 定义切点</p>
+</li>
+<li><p>@Aspect() 定义切面类</p>
+</li>
+<li><p>@Before() 前置通知</p>
+</li>
+<li><p>@After 后置通知</p>
+</li>
+<li><p>@AfterReturning 后置通知,必须切点正确执行</p>
+</li>
+<li><p>@AfterThrowing 异常通知</p>
+</li>
+<li><p>@Arround 环绕通知</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/声明式事务/" rel="tag"># 声明式事务</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/04/Spring学习02/" rel="next" title="Spring学习02">
+                <i class="fa fa-chevron-left"></i> Spring学习02
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/代理设计模式/" rel="prev" title="代理设计模式">
+                代理设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spring中的-自动注入"><span class="nav-number">1.</span> <span class="nav-text">spring中的 自动注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-中加载-properties-文件"><span class="nav-number">2.</span> <span class="nav-text">Spring 中加载 properties 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不用sqlSessionFactory"><span class="nav-number">2.1.</span> <span class="nav-text">为什么不用sqlSessionFactory?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bean标签的scope属性"><span class="nav-number">3.</span> <span class="nav-text">bean标签的scope属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scope-可取值"><span class="nav-number">3.2.</span> <span class="nav-text">scope 可取值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声明式事务"><span class="nav-number">4.</span> <span class="nav-text">声明式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编程式事务"><span class="nav-number">4.1.</span> <span class="nav-text">编程式事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明式事务-1"><span class="nav-number">4.2.</span> <span class="nav-text">声明式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#声明式事务配置"><span class="nav-number">4.2.1.</span> <span class="nav-text">声明式事务配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-中常用注解"><span class="nav-number">5.</span> <span class="nav-text">Spring 中常用注解.</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

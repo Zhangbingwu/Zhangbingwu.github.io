@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Linux简介 1.所谓的linux都是统称，具体版本都叫做发行版。   red hat ：目前全球最大的linux发行厂商（收费） ubuntu：免费，界面好。 麒麟 cent os 免费，redhat 分支。   2.定位   操作系统. 适合于服务器系统,不适合办公系统.   3.linux 相对 window 优点   稳定. 安全性比较高 免费.  系统目录介绍 /    根目录 ~">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/11/Linux/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="Linux简介 1.所谓的linux都是统称，具体版本都叫做发行版。   red hat ：目前全球最大的linux发行厂商（收费） ubuntu：免费，界面好。 麒麟 cent os 免费，redhat 分支。   2.定位   操作系统. 适合于服务器系统,不适合办公系统.   3.linux 相对 window 优点   稳定. 安全性比较高 免费.  系统目录介绍 /    根目录 ~">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-11T13:11:16.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux">
+<meta name="twitter:description" content="Linux简介 1.所谓的linux都是统称，具体版本都叫做发行版。   red hat ：目前全球最大的linux发行厂商（收费） ubuntu：免费，界面好。 麒麟 cent os 免费，redhat 分支。   2.定位   操作系统. 适合于服务器系统,不适合办公系统.   3.linux 相对 window 优点   稳定. 安全性比较高 免费.  系统目录介绍 /    根目录 ~">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/11/Linux/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/11/Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-11 00:00:00 / Modified: 21:11:16" itemprop="dateCreated datePublished" datetime="2019-08-11T00:00:00+08:00">2019-08-11</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>1.所谓的linux都是统称，具体版本都叫做发行版。</li>
+</ul>
+<ol>
+<li>red hat ：目前全球最大的linux发行厂商（收费）</li>
+<li>ubuntu：免费，界面好。</li>
+<li>麒麟</li>
+<li>cent os 免费，redhat 分支。</li>
+</ol>
+<ul>
+<li>2.定位</li>
+</ul>
+<ol>
+<li>操作系统.</li>
+<li>适合于服务器系统,不适合办公系统.</li>
+</ol>
+<ul>
+<li>3.linux 相对 window 优点</li>
+</ul>
+<ol>
+<li>稳定.</li>
+<li>安全性比较高</li>
+<li>免费.</li>
+</ol>
+<h1 id="系统目录介绍"><a href="#系统目录介绍" class="headerlink" title="系统目录介绍"></a>系统目录介绍</h1><ol>
+<li>/    根目录</li>
+<li>~    /root</li>
+<li>etc        存放系统配置目录</li>
+<li>home     除了root以为所有用户默认在home下新建一个以用户名做为文件夹名称的文件夹。 用户 xxx 对/home/xxx具有完全操作权限.</li>
+<li>root    用户root单独文件夹</li>
+<li>usr    所有用户安装的软件都放入到这个文件夹中<br>在usr/local下新建一个tmp,所有压缩包都上传到tmp中.</li>
+</ol>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><ol>
+<li>pwd 打印工作目录，当前所有文件夹全路径</li>
+<li>cd 进入文件夹</li>
+<li>cd .. 退出当前文件夹</li>
+<li>mkdir 新建空文件夹</li>
+<li>ls    平铺显示当前文件夹内容    ll 显示详细信息</li>
+<li>vi 和 vim 都是编辑文件<br>如果文件不存在,带有创建文件功能<br>vi 普通编辑 vim 高级编辑(带有颜色)<br>进入到编辑器后非可编辑状态,键盘insert启用编辑状态</li>
+<li>：wq 保存并退出<br>：q 退出<br>：q! 强制退出</li>
+<li>touch 创建空文件</li>
+<li>cat 在命令行中查看文件全部内容</li>
+<li>head [-n] 文件名        查看文件前n行，默认10行</li>
+<li>tail [-n] 文件名        查看文件后n行，默认10行</li>
+<li>tailf         动态显示文件(tomcat日志文件)</li>
+<li>echo ‘内容’ &gt;&gt; 文件名    向文件中添加一些内容</li>
+<li>ifconfig    打印网卡信息，查询当前ip</li>
+<li>reboot    重启</li>
+<li>tar zxvf 文件名    解压缩<br>v 解压过程显示</li>
+<li>zip unzip  压缩 解压</li>
+<li>cp [-r] 原文件 新文件路径            -复制文件，复制文件夹需要加-r</li>
+<li>ctrl+c   中断</li>
+<li>mv 原文件 新文件    -剪切，移动  可以用来修改文件名字</li>
+<li>rm    [-r][-f] 文件名         -移除文件，加-r移除目录 ，加-f不提示直接移除，-rf</li>
+<li>clear 清屏</li>
+</ol>
+<h1 id="不同用户登录"><a href="#不同用户登录" class="headerlink" title="不同用户登录"></a>不同用户登录</h1><p>root用户        显示 #<br>普通用户        显示 $</p>
+<h1 id="Xshell"><a href="#Xshell" class="headerlink" title="Xshell"></a>Xshell</h1><ol>
+<li>linux 客户端工具.</li>
+<li>CentOS 中默认只开启 22 端口.其他端口都被防火墙拦截.</li>
+</ol>
+<h1 id="Filezilla"><a href="#Filezilla" class="headerlink" title="Filezilla"></a>Filezilla</h1><ul>
+<li>1.FTP协议</li>
+</ul>
+<ol>
+<li>(FileTransfer Protocol）文件传输协议</li>
+<li>作用:互联网中,计算机之间传输文件需要遵守的协议.</li>
+</ol>
+<ul>
+<li>2.fileziila</li>
+</ul>
+<ol>
+<li>基于 FTP 协议的客户端工具.</li>
+<li>使用 filezilla 可以快速完成文件传输功能.</li>
+</ol>
+<h1 id="修改环境变量，防火墙"><a href="#修改环境变量，防火墙" class="headerlink" title="修改环境变量，防火墙"></a>修改环境变量，防火墙</h1><h2 id="修改环境变量"><a href="#修改环境变量" class="headerlink" title="修改环境变量"></a>修改环境变量</h2><ul>
+<li>1.# vim/etc/profile</li>
+<li>2.文件内容</li>
+</ul>
+<ol>
+<li>export 添加或修改变量</li>
+<li>多个变量之间 : 隔开，不像windows ;</li>
+<li>$变量名    表示引用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#exportPATHUSERLOGNAMEMAILHOSTNAMEHISTSIZEHISTCONTROL</span><br><span class="line">export JAVA_HOME=/usr/local/jdk7</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改后需要解析文件(或重启系统)<h1 id="source-etc-profile"><a href="#source-etc-profile" class="headerlink" title="source /etc/profile"></a>source /etc/profile</h1></li>
+</ol>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><ol>
+<li><h1 id="vim-etc-sysconfig-iptables"><a href="#vim-etc-sysconfig-iptables" class="headerlink" title="vim /etc/sysconfig/iptables"></a>vim /etc/sysconfig/iptables</h1></li>
+<li>8080:9000  表示从8080到9000全放行</li>
+<li>修改后重启防火墙<h1 id="service-iptables-restart"><a href="#service-iptables-restart" class="headerlink" title="service iptables restart"></a>service iptables restart</h1></li>
+</ol>
+<h1 id="启动tomcat"><a href="#启动tomcat" class="headerlink" title="启动tomcat"></a>启动tomcat</h1><ul>
+<li>linux中 .sh 表示可执行文件</li>
+<li>./startup.sh  启动tomcat</li>
+<li>./startup.sh &amp; tailf ../logs/catalina.out 启动tomcat并且显示日志</li>
+</ul>
+<h1 id="IDEA将项目打成war-非maven"><a href="#IDEA将项目打成war-非maven" class="headerlink" title="IDEA将项目打成war (非maven)"></a>IDEA将项目打成war (非maven)</h1><blockquote>
+<p><a href="https://www.cnblogs.com/developer_chan/p/8280865.html" target="_blank" rel="noopener">参考</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/10/RBAC学习/" rel="next" title="RBAC学习">
+                <i class="fa fa-chevron-left"></i> RBAC学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/12/Maven/" rel="prev" title="Maven">
+                Maven <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux"><span class="nav-number">1.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统目录介绍"><span class="nav-number">2.</span> <span class="nav-text">系统目录介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">3.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不同用户登录"><span class="nav-number">4.</span> <span class="nav-text">不同用户登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Xshell"><span class="nav-number">5.</span> <span class="nav-text">Xshell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Filezilla"><span class="nav-number">6.</span> <span class="nav-text">Filezilla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改环境变量，防火墙"><span class="nav-number">7.</span> <span class="nav-text">修改环境变量，防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改环境变量"><span class="nav-number">7.1.</span> <span class="nav-text">修改环境变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-etc-profile"><span class="nav-number">8.</span> <span class="nav-text">source /etc/profile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙"><span class="nav-number">8.1.</span> <span class="nav-text">防火墙</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-etc-sysconfig-iptables"><span class="nav-number">9.</span> <span class="nav-text">vim /etc/sysconfig/iptables</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-iptables-restart"><span class="nav-number">10.</span> <span class="nav-text">service iptables restart</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动tomcat"><span class="nav-number">11.</span> <span class="nav-text">启动tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IDEA将项目打成war-非maven"><span class="nav-number">12.</span> <span class="nav-text">IDEA将项目打成war (非maven)</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

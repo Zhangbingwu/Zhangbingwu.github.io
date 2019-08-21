@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="SpringMVC简介SpringMVC 中重要组件 DispatcherServlet:前端控制器,接收所有请求(如果配置 / 不包含 jsp)对请求做过滤。 HandlerMapping:解析请求格式的.判断希望要执行哪个具体的方法. HandlerAdapter:负责调用具体的方法. ViewResovler:视图解析器.解析结果,准备跳转到具体的物理视图  SpringMVC 运行原理 D">
+<meta name="keywords" content="springMVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springMVC学习01">
+<meta property="og:url" content="https://Zhangbingwu.github.io/2019/08/07/springMVC学习01/index.html">
+<meta property="og:site_name" content="却又像风">
+<meta property="og:description" content="SpringMVC简介SpringMVC 中重要组件 DispatcherServlet:前端控制器,接收所有请求(如果配置 / 不包含 jsp)对请求做过滤。 HandlerMapping:解析请求格式的.判断希望要执行哪个具体的方法. HandlerAdapter:负责调用具体的方法. ViewResovler:视图解析器.解析结果,准备跳转到具体的物理视图  SpringMVC 运行原理 D">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-07T12:55:57.691Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springMVC学习01">
+<meta name="twitter:description" content="SpringMVC简介SpringMVC 中重要组件 DispatcherServlet:前端控制器,接收所有请求(如果配置 / 不包含 jsp)对请求做过滤。 HandlerMapping:解析请求格式的.判断希望要执行哪个具体的方法. HandlerAdapter:负责调用具体的方法. ViewResovler:视图解析器.解析结果,准备跳转到具体的物理视图  SpringMVC 运行原理 D">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://Zhangbingwu.github.io/2019/08/07/springMVC学习01/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>springMVC学习01 | 却又像风</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">却又像风</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Zhangbingwu.github.io/2019/08/07/springMVC学习01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="却又像风">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="却又像风">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">springMVC学习01
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-07 00:00:00 / Modified: 20:55:57" itemprop="dateCreated datePublished" datetime="2019-08-07T00:00:00+08:00">2019-08-07</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/教学/" itemprop="url" rel="index"><span itemprop="name">教学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SpringMVC简介"><a href="#SpringMVC简介" class="headerlink" title="SpringMVC简介"></a>SpringMVC简介</h1><h2 id="SpringMVC-中重要组件"><a href="#SpringMVC-中重要组件" class="headerlink" title="SpringMVC 中重要组件"></a>SpringMVC 中重要组件</h2><ol>
+<li>DispatcherServlet:<br>前端控制器,接收所有请求(如果配置 / 不包含 jsp)<br>对请求做过滤。</li>
+<li>HandlerMapping:<br>解析请求格式的.判断希望要执行哪个具体的方法.</li>
+<li>HandlerAdapter:<br>负责调用具体的方法.</li>
+<li>ViewResovler:<br>视图解析器.解析结果,准备跳转到具体的物理视图</li>
+</ol>
+<h2 id="SpringMVC-运行原理"><a href="#SpringMVC-运行原理" class="headerlink" title="SpringMVC 运行原理"></a>SpringMVC 运行原理</h2><ul>
+<li>DispatcherServlet接收请求，如果符和匹配进行拦截，交给HandlerMapping对请求进行解析，判断有没有匹配的方法去执行，判断完成后交给HandlerAdapter根据判断对Controller中方法进行调用，ViewResovler解析并跳转的具体的物理视图给浏览器。</li>
+</ul>
+<h2 id="spring容器和springMVC容器的关系"><a href="#spring容器和springMVC容器的关系" class="headerlink" title="spring容器和springMVC容器的关系"></a>spring容器和springMVC容器的关系</h2><ul>
+<li>父子关系</li>
+</ul>
+<ol>
+<li><p>spring容器是springMVC的父容器</p>
+</li>
+<li><p>SpringMVC 容器中能够调用 Spring 容器的所有内容</p>
+<p>applicationContext spring容器<br>webApplicationContext spring整合web后容器<br>configableWebApplicationContext springMVC容器</p>
+</li>
+</ol>
+<h1 id="springMVC环境搭建"><a href="#springMVC环境搭建" class="headerlink" title="springMVC环境搭建"></a>springMVC环境搭建</h1><h2 id="1-导包"><a href="#1-导包" class="headerlink" title="1.导包"></a>1.导包</h2><ul>
+<li>spring-webmvc.jar</li>
+</ul>
+<h2 id="2-在web-xml中配置DispatcherServlet"><a href="#2-在web-xml中配置DispatcherServlet" class="headerlink" title="2.在web.xml中配置DispatcherServlet"></a>2.在web.xml中配置DispatcherServlet</h2><ul>
+<li>/ 会过滤除了jsp等所有请求</li>
+<li>如果没有init-param 会在<code>/WEB-INF/&lt;servlet-name&gt;-servlet.xml</code><br>如 abc-servlet.xml<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;servlet&gt;</span><br><span class="line">     &lt;servlet-name&gt;abc&lt;/servlet-name&gt;</span><br><span class="line">     &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;classpath:springmvc.xml&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt;</span><br><span class="line">     &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line"> &lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;abc&lt;/servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="配置springmvc-xml"><a href="#配置springmvc-xml" class="headerlink" title="配置springmvc.xml"></a>配置springmvc.xml</h2><ul>
+<li><p>注意在src下创建，名字必须和init-param标签的子标签param-value的路径及名称相同。</p>
+</li>
+<li><p>需要引入xmlns:mvc</p>
+</li>
+<li><p>注解配置，需要配置注解扫描。</p>
+</li>
+<li><p>注解驱动</p>
+</li>
+<li><p>静态资源</p>
+</li>
+</ul>
+<ol>
+<li>因为DispatcherServlet会把除了jsp的资源都过滤掉，想要访问静态资源必须进行配置。</li>
+<li>mapping是请求url匹配  如/js/jquery.js <code>**</code>表示jquery.js</li>
+</ol>
+<ul>
+<li>示例<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/mvc</span><br><span class="line">        http://www.springframework.org/schema/mvc/spring-mvc.xsd</span><br><span class="line">        http://www.springframework.org/schema/context</span><br><span class="line">        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;</span><br><span class="line">&lt;!--    扫描注解--&gt;</span><br><span class="line">    &lt;context:component-scan base-package=&quot;com.zbw.controller&quot;/&gt;</span><br><span class="line">&lt;!--    注解驱动--&gt;</span><br><span class="line">    &lt;mvc:annotation-driven&gt;&lt;/mvc:annotation-driven&gt;</span><br><span class="line">&lt;!--    静态资源 --&gt;</span><br><span class="line">    &lt;mvc:resources mapping=&quot;/js/**&quot; location=&quot;/js/&quot;/&gt;</span><br><span class="line">    &lt;mvc:resources mapping=&quot;/css/**&quot; location=&quot;/css/&quot;/&gt;</span><br><span class="line">    &lt;mvc:resources mapping=&quot;/images/**&quot; location=&quot;/images/&quot;/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">#	spring字符编码过滤器</span><br><span class="line">-	在web.xml中配置</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<!--    设置过滤器 字符编码-->
+<pre><code>&lt;filter&gt;
+    &lt;filter-name&gt;encoding&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;encoding&lt;/param-name&gt;
+        &lt;param-value&gt;utf-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/filter&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;encoding&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-	CharacterEncodingFilter</span><br><span class="line">可以用init-param标签设置参数。</span><br></pre></td></tr></table></figure>
+
+<p>public class CharacterEncodingFilter extends OncePerRequestFilter {</p>
+<pre><code>private String encoding;
+
+private boolean forceEncoding = false;
+
+@Override
+protected void doFilterInternal(
+        HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
+
+    if (this.encoding != null &amp;&amp; (this.forceEncoding || request.getCharacterEncoding() == null)) {
+        request.setCharacterEncoding(this.encoding);
+        if (this.forceEncoding) {
+            response.setCharacterEncoding(this.encoding);
+        }
+    }
+    filterChain.doFilter(request, response);
+}</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#	传参</span><br><span class="line">-	内容写到方法HandlerMethod的参数中,SpringMVC只要有这个内容,就会注入内容.</span><br><span class="line"></span><br><span class="line">-	1.基本数据类型参数</span><br><span class="line">1.	默认保证参数名称和请求中传递的参数名相同 </span><br><span class="line">2.	如果请求参数名和方法参数名不对应使用@RequestParam()赋值</span><br><span class="line">3.	如果方法参数是基本数据类型(不是封装类)可以通过@RequestParam 设置默认值.</span><br><span class="line">	防止没有参数时 500</span><br><span class="line"></span><br><span class="line">4.	如果强制要求必须有某个参数 (@RequestParam(required=true) </span><br><span class="line"></span><br><span class="line">-	2.HandlerMethod 中参数是对象类型</span><br><span class="line">	请求参数名和对象中属性名对应(get/set 方法)</span><br><span class="line"></span><br><span class="line">-	3.请求参数为 对象.属性 格式</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;input type=&quot;text&quot; name=&quot;user.name&quot;/&gt;
+&lt;input type=&quot;password&quot; name=&quot;user.pwd&quot;/&gt;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用一个由user这个属性的对象来接。</span><br></pre></td></tr></table></figure>
+
+<pre><code>public class People {
+    private User user;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-	4.请求参数中包含多个同名参数的获取方式</span><br><span class="line">	复选框传递的参数就是多个同名参数</span><br><span class="line">	@RequestParam(&quot;参数名&quot;)</span><br><span class="line"></span><br><span class="line">	可以用List集合接，也可以用数组String[]接。</span><br></pre></td></tr></table></figure>
+
+<pre><code>@RequestMapping(&quot;demo4&quot;)
+public String demo4(@RequestParam(&quot;fav&quot;) List&lt;String&gt; abc){
+    System.out.println(abc);
+    return &quot;main.jsp&quot;;
+}</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-	5.在请求参数中传递集合对象类型参数</span><br></pre></td></tr></table></figure>
+
+<pre><code>public class People {
+    private List&lt;User&gt; user;</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">    &lt;input type=&quot;text&quot; name=&quot;user[0].name&quot;/&gt;</span><br><span class="line">    &lt;input type=&quot;password&quot; name=&quot;user[0].pwd&quot;/&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; name=&quot;user[1].name&quot;/&gt;</span><br><span class="line">    &lt;input type=&quot;password&quot; name=&quot;user[1].pwd&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>People{user=[User{name=&#39;1&#39;, pwd=&#39;1&#39;}, User{name=&#39;2&#39;, pwd=&#39;2&#39;}]}</code></p>
+<ul>
+<li>6.restful方式</li>
+</ul>
+<ol>
+<li>在@RequestMapping 中一定要和请求格式对应</li>
+<li>@PathVariable 获取@RequestMapping 中内容,默认按照<br>方法参数名称去寻找。</li>
+</ol>
+<p>例如:<br><code>&lt;a href=&quot;demo5/123/张&quot;&gt;跳转&lt;/a&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//restful方式</span><br><span class="line">    @RequestMapping(&quot;/demo5/&#123;id&#125;/&#123;name2&#125;&quot;)</span><br><span class="line">    public String demo5(@PathVariable(&quot;id&quot;) int id,@PathVariable(&quot;name2&quot;) String name)&#123;</span><br><span class="line">        System.out.println(id+&quot;-&quot;+name);</span><br><span class="line">        return &quot;main.jsp&quot;;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="跳转方式"><a href="#跳转方式" class="headerlink" title="跳转方式"></a>跳转方式</h1><ol>
+<li>默认跳转方式请求转发.</li>
+<li>设置返回值字符串内容<br>添加 redirect:资源路径 重定向<br>添加 forward:资源路径 或省略 forward: 转发<br><code>return &quot;redirect:main.jsp&quot;;</code></li>
+</ol>
+<h1 id="视图解析器"><a href="#视图解析器" class="headerlink" title="视图解析器"></a>视图解析器</h1><ol>
+<li>SpringMVC 会提供默认视图解析器.</li>
+<li>程序员自定义视图解析器<br>InternalResourceViewResolver<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--自定义视图解析器--&gt;</span><br><span class="line">    &lt;bean id=&quot;viewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;prefix&quot; value=&quot;/&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>注意：如果希望不执行自定义视图解析器,在方法返回值前面添加<br>forward:或 redirect:<br>比如：希望跳转的不是jsp文件而是html，return forward:main.html;</p>
+<h1 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h1><ul>
+<li><p>在方法上只有@RequestMapping 时,无论方法返回值是什么认为需要跳转.<br>如果没有返回值，即void：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;demo6&quot;)</span><br><span class="line">    public void demo6(HttpServletResponse response) throws IOException &#123;</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        out.write(&quot;abc&quot;);</span><br><span class="line">        out.flush();</span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在方法上添加@ResponseBody(恒不跳转)</p>
+</li>
+</ul>
+<ol>
+<li>如果返回值满足 key-value 形式(对象或 map)<br>  自动把响应头设置为 application/json;charset=utf-8<br>  自动把转换后的内容输出流的形式响应给客户端.</li>
+<li>如果返回值不满足 key-value,例如返回值为 String<br>  把相应头设置为 text/html<br>  把方法返回值以流的形式直接输出.</li>
+<li>如果 <em>返回值</em> 包含中文,出现中文乱码<br>@RequestMapping中属性 produces 表示响应头中 Content-Type 取值.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;demo6&quot;,produces = &quot;text/html;charset=utf-8&quot;)</span><br><span class="line">@ResponseBody</span><br><span class="line">public String demo6()&#123;</span><br><span class="line">    return &quot;哈哈&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>注意：@ResponseBody底层使用jackson解析，需要导入相关jar。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/springMVC/" rel="tag"># springMVC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/06/单例设计模式/" rel="next" title="单例设计模式">
+                <i class="fa fa-chevron-left"></i> 单例设计模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/08/springMVC学习02/" rel="prev" title="springMVC学习02">
+                springMVC学习02 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1563444126972&di=49a87db69dc990a1a8900b0342e56db4&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fphoto%2Fl%2Fpublic%2Fp2363439091.jpg" alt="却又像风">
+            
+              <p class="site-author-name" itemprop="name">却又像风</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Zhangbingwu" title="GitHub &rarr; https://github.com/Zhangbingwu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://user.qzone.qq.com/670322387/infocenter" title="QQZone &rarr; https://user.qzone.qq.com/670322387/infocenter" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQZone"></i>QQZone</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/u/6053240334" title="Weibo &rarr; https://weibo.com/u/6053240334" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringMVC简介"><span class="nav-number">1.</span> <span class="nav-text">SpringMVC简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMVC-中重要组件"><span class="nav-number">1.1.</span> <span class="nav-text">SpringMVC 中重要组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringMVC-运行原理"><span class="nav-number">1.2.</span> <span class="nav-text">SpringMVC 运行原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring容器和springMVC容器的关系"><span class="nav-number">1.3.</span> <span class="nav-text">spring容器和springMVC容器的关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#springMVC环境搭建"><span class="nav-number">2.</span> <span class="nav-text">springMVC环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-导包"><span class="nav-number">2.1.</span> <span class="nav-text">1.导包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-在web-xml中配置DispatcherServlet"><span class="nav-number">2.2.</span> <span class="nav-text">2.在web.xml中配置DispatcherServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置springmvc-xml"><span class="nav-number">2.3.</span> <span class="nav-text">配置springmvc.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳转方式"><span class="nav-number">3.</span> <span class="nav-text">跳转方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图解析器"><span class="nav-number">4.</span> <span class="nav-text">视图解析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResponseBody"><span class="nav-number">5.</span> <span class="nav-text">@ResponseBody</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">却又像风</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
